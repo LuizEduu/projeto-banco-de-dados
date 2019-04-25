@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate3.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/hibernate-validator.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/javassist.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/jboss-archive-browsing.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/jboss-transaction-api_1.1_spec-1.0.1.final.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/jta.jar"/>
+	<classpathentry kind="lib" path="C:/hibernate/libs_hibernate/mysql-connector-java-5.1.12-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
