@@ -1,15 +1,21 @@
 package model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "enderecopaciente")
-public class EnderecoPaciente {
+public class EnderecoPaciente implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name = "idenderecopaciente")
@@ -18,6 +24,12 @@ public class EnderecoPaciente {
 	private String numero;
 	private String bairro;
 	private String cidade;
+	
+	//@Column(name = "id_paciente")
+	@OneToOne
+	@GeneratedValue
+	@JoinColumn(name = "id_paciente", referencedColumnName = "idpaciente")
+	private Paciente idtelefonepaciente;
 
 	public EnderecoPaciente(String rua, String numero, String bairro, String cidade) {
 		super();
