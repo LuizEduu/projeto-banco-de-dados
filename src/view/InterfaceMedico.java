@@ -18,20 +18,22 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import controller.ControllerMedico;
 import controller.ControllerPaciente;
 import model.Paciente;
 
-public class InterfacePaciente {
-	ControllerPaciente controllerPaciente = new ControllerPaciente();
+public class InterfaceMedico {
 
-	public void cadastrarpaciente() {
-		JPanel cadastrarPaciente = new JPanel();
-		cadastrarPaciente.setLayout(new GridLayout(10, 2, -5, 3));
-		JFrame janelaCadastrarPaciente = new JFrame("Cadastrar");
-		janelaCadastrarPaciente.setSize(560, 410);
-		janelaCadastrarPaciente.setLocationRelativeTo(null);
-		janelaCadastrarPaciente.setVisible(true);
-		janelaCadastrarPaciente.add(cadastrarPaciente);
+	ControllerMedico controllerMedico = new ControllerMedico();
+
+	public void cadastrarMedico() {
+		JPanel cadastrarMedico = new JPanel();
+		cadastrarMedico.setLayout(new GridLayout(10, 2, -5, 3));
+		JFrame janelaCadastrarMedico = new JFrame("Cadastrar");
+		janelaCadastrarMedico.setSize(560, 410);
+		janelaCadastrarMedico.setLocationRelativeTo(null);
+		janelaCadastrarMedico.setVisible(true);
+		janelaCadastrarMedico.add(cadastrarMedico);
 
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
@@ -41,8 +43,8 @@ public class InterfacePaciente {
 		ComboSexo.addItem("F");
 		ComboSexo.setSelectedItem(null);
 		JLabel lblSexo = new JLabel("Sexo: ");
-		JLabel lblemail = new JLabel("Email: ");
-		JTextField txtemail = new JTextField(100);
+		JLabel lblespecialidade = new JLabel("Especialidade: ");
+		JTextField txtespecialidade = new JTextField(100);
 		JLabel lbltelefone = new JLabel("Telefone: ");
 
 		MaskFormatter masktelefone = null;
@@ -75,35 +77,35 @@ public class InterfacePaciente {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		JButton btnFecharcadastro = new JButton("Fechar Cadastro");
 
-		cadastrarPaciente.add(lblNome);
-		cadastrarPaciente.add(txtNome);
-		cadastrarPaciente.add(lblSexo);
-		cadastrarPaciente.add(ComboSexo);
-		cadastrarPaciente.add(lblemail);
-		cadastrarPaciente.add(txtemail);
-		cadastrarPaciente.add(lbltelefone);
-		cadastrarPaciente.add(txttelefone);
-		cadastrarPaciente.add(lblrua);
-		cadastrarPaciente.add(txtrua);
-		cadastrarPaciente.add(lblnumero);
-		cadastrarPaciente.add(txtnumero);
-		cadastrarPaciente.add(lblbairro);
-		cadastrarPaciente.add(txtbairro);
-		cadastrarPaciente.add(lblcidade);
-		cadastrarPaciente.add(txtcidade);
-		cadastrarPaciente.add(lbldatanascimento);
-		cadastrarPaciente.add(txtnascimento);
-		cadastrarPaciente.add(btnCadastrar);
-		cadastrarPaciente.add(btnFecharcadastro);
+		cadastrarMedico.add(lblNome);
+		cadastrarMedico.add(txtNome);
+		cadastrarMedico.add(lblSexo);
+		cadastrarMedico.add(ComboSexo);
+		cadastrarMedico.add(lblespecialidade);
+		cadastrarMedico.add(txtespecialidade);
+		cadastrarMedico.add(lbltelefone);
+		cadastrarMedico.add(txttelefone);
+		cadastrarMedico.add(lblrua);
+		cadastrarMedico.add(txtrua);
+		cadastrarMedico.add(lblnumero);
+		cadastrarMedico.add(txtnumero);
+		cadastrarMedico.add(lblbairro);
+		cadastrarMedico.add(txtbairro);
+		cadastrarMedico.add(lblcidade);
+		cadastrarMedico.add(txtcidade);
+		cadastrarMedico.add(lbldatanascimento);
+		cadastrarMedico.add(txtnascimento);
+		cadastrarMedico.add(btnCadastrar);
+		cadastrarMedico.add(btnFecharcadastro);
 
 		btnCadastrar.addActionListener((ActionEvent) -> {
-			controllerPaciente.cadastrarPaciente(txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
+			controllerMedico.cadas(txtNome.getText(), (String) ComboSexo.getSelectedItem(),
+					txtespecialidade.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
 					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 
 			txtNome.setText(null);
 			ComboSexo.setSelectedItem(null);
-			txtemail.setText(null);
+			txtespecialidade.setText(null);
 			txttelefone.setText(null);
 			txtrua.setText(null);
 			txtnumero.setText(null);
@@ -113,7 +115,7 @@ public class InterfacePaciente {
 		});
 
 		btnFecharcadastro.addActionListener((ActionEvent) -> {
-			janelaCadastrarPaciente.dispose();
+			janelaCadastrarMedico.dispose();
 		});
 	}
 
@@ -198,7 +200,7 @@ public class InterfacePaciente {
 		botaobuscar.addActionListener(ActionEvent -> {
 			Paciente paciente = new Paciente();
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerPaciente.buscarPaciente(idtemp);
+			paciente = controllerMedico.buscarPaciente(idtemp);
 
 			txtNome.setText(paciente.getNome());
 			ComboSexo.setSelectedItem(paciente.getSexo());
@@ -214,7 +216,7 @@ public class InterfacePaciente {
 
 		editar.addActionListener(ActionEvent -> {
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerPaciente.atualizarpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
+			controllerMedico.atualizarpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
 					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
 					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 		});
@@ -316,7 +318,7 @@ public class InterfacePaciente {
 		botaobuscar.addActionListener((ActionEvent) -> {
 			Paciente paciente = new Paciente();
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerPaciente.buscarPaciente(idtemp);
+			paciente = controllerMedico.buscarPaciente(idtemp);
 			txtNome.setText(paciente.getNome());
 			ComboSexo.setSelectedItem(paciente.getSexo());
 			txtemail.setText(paciente.getEmail());
@@ -340,7 +342,7 @@ public class InterfacePaciente {
 
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
-			controllerPaciente.removerpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
+			controllerMedico.removerpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
 					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
 					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 		});
@@ -369,7 +371,7 @@ public class InterfacePaciente {
 		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
 				"Vazio" };
 
-		ArrayList<Paciente> list = controllerPaciente.listarpaciente();
+		ArrayList<Paciente> list = controllerMedico.listarpaciente();
 
 		if (list == null) {
 			tabelaPaciente.addRow(elementosvazio);

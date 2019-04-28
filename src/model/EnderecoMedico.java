@@ -1,22 +1,17 @@
 package model;
 
-import java.io.Serializable;
+public class EnderecoMedico {
 
-public class EnderecoPaciente implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private Long idenderecopaciente;
+	private long id;
 	private String rua;
 	private String numero;
 	private String bairro;
 	private String cidade;
-	
 
-	public EnderecoPaciente() {
+	public EnderecoMedico() {
 	}
 
-	public EnderecoPaciente(String rua, String numero, String bairro, String cidade) {
+	public EnderecoMedico(String rua, String numero, String bairro, String cidade) {
 		super();
 		this.rua = rua;
 		this.numero = numero;
@@ -24,12 +19,12 @@ public class EnderecoPaciente implements Serializable {
 		this.cidade = cidade;
 	}
 
-	public Long getIdenderecopaciente() {
-		return idenderecopaciente;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdenderecopaciente(Long idenderecopaciente) {
-		this.idenderecopaciente = idenderecopaciente;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getRua() {

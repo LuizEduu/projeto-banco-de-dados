@@ -77,11 +77,12 @@ public class InterfacePrincipal {
 		jPrincipal.setJMenuBar(jBarraMenu);
 
 		cadastrarPaciente(cadastrarpaciente);
-		/*
-		 * editarPaciente(editarpaciente); removerPaciente(removerpaciente);
-		 * listarPaciente(listarpaciente);
-		 * 
-		 */
+		
+		  editarPaciente(editarpaciente);
+		  removerPaciente(removerpaciente);
+		  listarPaciente(listarpaciente);
+		 
+		 
 	}
 
 	private void cadastrarPaciente(JMenuItem cadastrarpaciente) {
@@ -90,23 +91,17 @@ public class InterfacePrincipal {
 		});
 	}
 
-	/*
-	 * private void editarPaciente(JMenuItem editarpaciente) {
-	 * editarpaciente.addActionListener(ActionEvent -> {
-	 * interfacePaciente.editarpaciente(); }); }
-	 * 
-	 * private void removerPaciente(JMenuItem removerpaciente) {
-	 * removerpaciente.addActionListener(ActionEvent -> {
-	 * interfacePaciente.removerpaciente(); }); }
-	 * 
-	 * private void listarPaciente(JMenuItem listarpaciente) {
-	 * listarpaciente.addActionListener(ActionEvent -> {
-	 * interfacePaciente.listarpaciente(); }); }
-	 */
-
-	public static void main(String[] args) {
-		InterfacePrincipal interfacePrincipal = new InterfacePrincipal();
-		interfacePrincipal.janelaprincipal();
-	}
-
+	
+	 private void editarPaciente(JMenuItem editarpaciente) {
+	 editarpaciente.addActionListener(ActionEvent -> {
+	 interfacePaciente.editarpaciente(); }); }
+	
+	 private void removerPaciente(JMenuItem removerpaciente) {
+	 removerpaciente.addActionListener(ActionEvent -> {
+	 interfacePaciente.removerpaciente(); }); }
+	 
+	 private void listarPaciente(JMenuItem listarpaciente) {
+	 listarpaciente.addActionListener(ActionEvent -> {
+	 interfacePaciente.listarpaciente(); }); }
+	
 }

@@ -2,25 +2,17 @@ package model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "paciente")
 public class Paciente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue
-	@Column(name = "idpaciente")
-	private int id;
+
+	private Long id;
 	private String nome;
 	private String sexo;
 	private String email;
 	private String nascimento;
+	private TelefonePaciente telefonePaciente = new TelefonePaciente();
+	private EnderecoPaciente enderecoPaciente = new EnderecoPaciente();
 
 	public Paciente() {
 	}
@@ -32,11 +24,11 @@ public class Paciente implements Serializable {
 		this.nascimento = nascimento;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -76,6 +68,22 @@ public class Paciente implements Serializable {
 	public String toString() {
 		return "Paciente [id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", email=" + email + ", nascimento="
 				+ nascimento + "]";
+	}
+
+	public TelefonePaciente getTelefonePaciente() {
+		return telefonePaciente;
+	}
+
+	public void setTelefonePaciente(TelefonePaciente telefonePaciente) {
+		this.telefonePaciente = telefonePaciente;
+	}
+
+	public EnderecoPaciente getEnderecoPaciente() {
+		return enderecoPaciente;
+	}
+
+	public void setEnderecoPaciente(EnderecoPaciente enderecoPaciente) {
+		this.enderecoPaciente = enderecoPaciente;
 	}
 
 }
