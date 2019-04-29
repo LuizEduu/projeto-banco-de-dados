@@ -244,7 +244,7 @@ public class InterfaceMedico {
 		JButton botaobuscar = new JButton("Buscar");
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
-		
+
 		MaskFormatter maskcpf = null;
 		try {
 			maskcpf = new MaskFormatter("###.###.###-##");

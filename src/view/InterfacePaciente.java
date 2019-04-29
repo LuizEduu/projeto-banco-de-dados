@@ -112,6 +112,7 @@ public class InterfacePaciente {
 					txtnumero.getText(), txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 
 			txtNome.setText(null);
+			txtcpf.setText(null);
 			ComboSexo.setSelectedItem(null);
 			txtemail.setText(null);
 			txttelefone.setText(null);
@@ -222,9 +223,10 @@ public class InterfacePaciente {
 			paciente = controllerPaciente.buscarPaciente(idtemp);
 
 			txtNome.setText(paciente.getNome());
+			txtcpf.setText(paciente.getCpf());
 			ComboSexo.setSelectedItem(paciente.getSexo());
 			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getTelefone());
+			txttelefone.setText(paciente.getTelefonePaciente().getNumero());
 			txtrua.setText(paciente.getEnderecoPaciente().getRua());
 			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
 			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
@@ -362,7 +364,7 @@ public class InterfacePaciente {
 			txtcpf.setText(paciente.getCpf());
 			txtsexo.setText(paciente.getSexo());
 			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getTelefone());
+			txttelefone.setText(paciente.getTelefonePaciente().getNumero());
 			txtrua.setText(paciente.getEnderecoPaciente().getRua());
 			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
 			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
@@ -419,7 +421,7 @@ public class InterfacePaciente {
 				txtNome.setText(paciente.getNome());
 				txtsexo.setText(paciente.getSexo());
 				txtEmail.setText(paciente.getEmail());
-				txtTelefone.setText(paciente.getTelefonePaciente().getTelefone());
+				txtTelefone.setText(paciente.getTelefonePaciente().getNumero());
 				txtRua.setText(paciente.getEnderecoPaciente().getRua());
 				txtNumero.setText(paciente.getEnderecoPaciente().getNumero());
 				txtBairro.setText(paciente.getEnderecoPaciente().getBairro());

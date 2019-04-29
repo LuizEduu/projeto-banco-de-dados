@@ -23,12 +23,13 @@ public class PacienteDao {
 	public void Salvar(Paciente paciente, TelefonePaciente telefonePaciente, EnderecoPaciente enderecoPaciente) {
 		try {
 
-			String sql = "insert into paciente (nome, sexo, email, nascimento) values (?, ?, ?, ?)";
+			String sql = "insert into paciente (nome, cpf, sexo, email, nascimento) values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, paciente.getNome());
-			preparedStatement.setString(2, paciente.getSexo());
-			preparedStatement.setString(3, paciente.getEmail());
-			preparedStatement.setString(4, paciente.getNascimento());
+			preparedStatement.setString(2, paciente.getCpf());
+			preparedStatement.setString(3, paciente.getSexo());
+			preparedStatement.setString(4, paciente.getEmail());
+			preparedStatement.setString(5, paciente.getNascimento());
 			preparedStatement.execute();
 
 			int lastId = 0;
@@ -39,7 +40,7 @@ public class PacienteDao {
 
 			String sql2 = "insert into telefonepaciente (numerotelefone, id_paciente) values (?,?)";
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
-			preparedStatement2.setString(1, telefonePaciente.getTelefone());
+			preparedStatement2.setString(1, telefonePaciente.getNumero());
 			preparedStatement2.setInt(2, lastId);
 
 			String sql3 = "insert into enderecopaciente (rua, numero, bairro, cidade, id_paciente) values(?, ?, ?, ?, ?)";
@@ -63,9 +64,11 @@ public class PacienteDao {
 	public Paciente buscar(Long id) {
 		Paciente paciente = new Paciente();
 		try {
-			String sql = "select p.nome, p.sexo, p.email, t.numerotelefone, e.rua, e.numero, e.bairro, e.cidade, p.nascimento "
-					+ "from paciente p " + "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
-					+ "inner join enderecopaciente e ON e.id_paciente = p.idpaciente " + "where idpaciente = ?";
+			String sql = "select p.nome, p.cpf, p.sexo, p.email, t.numerotelefone, e.rua, e.numero, e.bairro,"
+					+ " e.cidade, p.nascimento " + "from paciente p "
+					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
+					+ "inner join enderecopaciente e ON e.id_paciente = p.idpaciente "
+					+ "where p.idpaciente = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, id);
@@ -73,9 +76,10 @@ public class PacienteDao {
 
 			while (resultSet.next()) {
 				paciente.setNome(resultSet.getString("nome"));
+				paciente.setCpf(resultSet.getString("cpf"));
 				paciente.setSexo(resultSet.getString("sexo"));
 				paciente.setEmail(resultSet.getString("email"));
-				paciente.getTelefonePaciente().setTelefone(resultSet.getString("numerotelefone"));
+				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefone"));
 				paciente.getEnderecoPaciente().setRua(resultSet.getString("rua"));
 				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numero"));
 				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairro"));
@@ -91,27 +95,28 @@ public class PacienteDao {
 			e.printStackTrace();
 
 		}
-		return paciente;
 
+		return paciente;
 	}
 
 	public void atualizarpaciente(Long id, Paciente paciente, TelefonePaciente telefonePaciente,
 			EnderecoPaciente enderecoPaciente) {
 		try {
-			String sql = "update paciente set nome= ?, sexo= ?, email= ?,nascimento= ? where idpaciente= ?";
-			String sql2 = "update telefonepaciente set numerotelefone= ? where idtelefonepaciente= ?";
-			String sql3 = "update enderecopaciente set rua= ?, numero= ?, bairro= ?, cidade= ? where idenderecopaciente= ?";
+			String sql = "update paciente set nome= ?, cpf= ?, sexo= ?, email= ?, nascimento= ? where idpaciente= ?";
+			String sql2 = "update telefonepaciente set numerotelefone= ? where id_paciente= ?";
+			String sql3 = "update enderecopaciente set rua= ?, numero= ?, bairro= ?, cidade= ? where id_paciente= ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			PreparedStatement preparedStatement3 = connection.prepareStatement(sql3);
 
 			preparedStatement.setString(1, paciente.getNome());
-			preparedStatement.setString(2, paciente.getSexo());
-			preparedStatement.setString(3, paciente.getEmail());
-			preparedStatement.setString(4, paciente.getNascimento());
-			preparedStatement.setLong(5, id);
+			preparedStatement.setString(2, paciente.getCpf());
+			preparedStatement.setString(3, paciente.getSexo());
+			preparedStatement.setString(4, paciente.getEmail());
+			preparedStatement.setString(5, paciente.getNascimento());
+			preparedStatement.setLong(6, id);
 
-			preparedStatement2.setString(1, telefonePaciente.getTelefone());
+			preparedStatement2.setString(1, telefonePaciente.getNumero());
 			preparedStatement2.setLong(2, id);
 
 			preparedStatement3.setString(1, enderecoPaciente.getRua());
@@ -169,8 +174,9 @@ public class PacienteDao {
 	public ArrayList<Paciente> Listar() {
 		ArrayList<Paciente> list = new ArrayList<Paciente>();
 		try {
-			String sql = "select p.idpaciente, p.nome, p.sexo, p.email, t.numerotelefone, e.rua, e.numero, e.bairro, e.cidade, p.nascimento "
-					+ "from paciente p " + "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
+			String sql = "select p.idpaciente, p.nome, p.cpf, p.sexo, p.email, t.numerotelefone, e.rua, e.numero,"
+					+ " e.bairro, e.cidade, p.nascimento from paciente p "
+					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
 					+ "inner join enderecopaciente e ON e.id_paciente = p.idpaciente";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -180,9 +186,10 @@ public class PacienteDao {
 				Paciente paciente = new Paciente();
 				paciente.setId(resultSet.getLong("idpaciente"));
 				paciente.setNome(resultSet.getString("nome"));
+				paciente.setCpf(resultSet.getString("cpf"));
 				paciente.setSexo(resultSet.getString("sexo"));
 				paciente.setEmail(resultSet.getString("email"));
-				paciente.getTelefonePaciente().setTelefone(resultSet.getString("numerotelefone"));
+				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefone"));
 				paciente.getEnderecoPaciente().setRua(resultSet.getString("rua"));
 				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numero"));
 				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairro"));

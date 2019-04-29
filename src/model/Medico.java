@@ -8,8 +8,8 @@ public class Medico {
 	private String sexo;
 	private String especialidade;
 	private String crm;
-	private TelefoneMedico telefoneMedico;
-	private EnderecoMedico enderecoMedico;
+	private TelefoneMedico telefoneMedico = new TelefoneMedico();
+	private EnderecoMedico enderecoMedico = new EnderecoMedico();
 
 	public Medico() {
 	}

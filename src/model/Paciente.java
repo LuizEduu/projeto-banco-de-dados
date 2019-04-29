@@ -12,8 +12,8 @@ public class Paciente implements Serializable {
 	private String sexo;
 	private String email;
 	private String nascimento;
-	private TelefonePaciente telefonePaciente;
-	private EnderecoPaciente enderecoPaciente;
+	private TelefonePaciente telefonePaciente = new TelefonePaciente();
+	private EnderecoPaciente enderecoPaciente = new EnderecoPaciente();
 
 	public Paciente() {
 	}

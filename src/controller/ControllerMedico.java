@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import dao.MedicoDao;
 import model.EnderecoMedico;
-import model.EnderecoPaciente;
 import model.Medico;
 import model.TelefoneMedico;
 
@@ -35,12 +34,12 @@ public class ControllerMedico {
 		String telefonetemp = LimpaDados.limpatelefone(telefone);
 		Medico medico = new Medico(nome, cpftemp, sexo, especialidade, crm);
 		TelefoneMedico telefoneMedico = new TelefoneMedico(telefonetemp);
-		EnderecoPaciente enderecoMedico = new EnderecoPaciente(rua, numero, bairro, cidade);
+		EnderecoMedico enderecoMedico = new EnderecoMedico(rua, numero, bairro, cidade);
 		dao.atualizarMedico(id, medico, telefoneMedico, enderecoMedico);
 	}
 
 	public void removerMedico(int id) {
-		dao.removerpaciente(id);
+		dao.removerMedico(id);
 	}
 
 	public ArrayList<Medico> listarMedico() {
