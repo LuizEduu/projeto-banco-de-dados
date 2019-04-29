@@ -26,7 +26,7 @@ public class InterfacePaciente {
 
 	public void cadastrarpaciente() {
 		JPanel cadastrarPaciente = new JPanel();
-		cadastrarPaciente.setLayout(new GridLayout(10, 2, -5, 3));
+		cadastrarPaciente.setLayout(new GridLayout(11, 2, -5, 3));
 		JFrame janelaCadastrarPaciente = new JFrame("Cadastrar");
 		janelaCadastrarPaciente.setSize(560, 410);
 		janelaCadastrarPaciente.setLocationRelativeTo(null);
@@ -36,6 +36,14 @@ public class InterfacePaciente {
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
 
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JComboBox<String> ComboSexo = new JComboBox<String>();
 		ComboSexo.addItem("M");
 		ComboSexo.addItem("F");
@@ -77,6 +85,8 @@ public class InterfacePaciente {
 
 		cadastrarPaciente.add(lblNome);
 		cadastrarPaciente.add(txtNome);
+		cadastrarPaciente.add(lblcpf);
+		cadastrarPaciente.add(txtcpf);
 		cadastrarPaciente.add(lblSexo);
 		cadastrarPaciente.add(ComboSexo);
 		cadastrarPaciente.add(lblemail);
@@ -97,9 +107,9 @@ public class InterfacePaciente {
 		cadastrarPaciente.add(btnFecharcadastro);
 
 		btnCadastrar.addActionListener((ActionEvent) -> {
-			controllerPaciente.cadastrarPaciente(txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerPaciente.cadastrarPaciente(txtNome.getText(), txtcpf.getText(),
+					(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(), txtrua.getText(),
+					txtnumero.getText(), txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 
 			txtNome.setText(null);
 			ComboSexo.setSelectedItem(null);
@@ -119,9 +129,9 @@ public class InterfacePaciente {
 
 	public void editarpaciente() {
 		JPanel editarPaciente = new JPanel();
-		editarPaciente.setLayout(new GridLayout(12, 2, -1, 3));
+		editarPaciente.setLayout(new GridLayout(13, 2, -1, 3));
 		JFrame janelaEditarPaciente = new JFrame("Editar");
-		janelaEditarPaciente.setSize(560, 410);
+		janelaEditarPaciente.setSize(560, 480);
 		janelaEditarPaciente.setLocationRelativeTo(null);
 		janelaEditarPaciente.setVisible(true);
 		janelaEditarPaciente.add(editarPaciente);
@@ -132,6 +142,15 @@ public class InterfacePaciente {
 
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(100);
+
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JComboBox<String> ComboSexo = new JComboBox<String>();
 		ComboSexo.addItem("M");
 		ComboSexo.addItem("F");
@@ -176,6 +195,8 @@ public class InterfacePaciente {
 		editarPaciente.add(new JLabel());
 		editarPaciente.add(lblNome);
 		editarPaciente.add(txtNome);
+		editarPaciente.add(lblcpf);
+		editarPaciente.add(txtcpf);
 		editarPaciente.add(lblSexo);
 		editarPaciente.add(ComboSexo);
 		editarPaciente.add(lblemail);
@@ -214,9 +235,9 @@ public class InterfacePaciente {
 
 		editar.addActionListener(ActionEvent -> {
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerPaciente.atualizarpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerPaciente.atualizarpaciente(idtemp, txtNome.getText(), txtcpf.getText(),
+					(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(), txtrua.getText(),
+					txtnumero.getText(), txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
@@ -226,9 +247,9 @@ public class InterfacePaciente {
 
 	public void removerpaciente() {
 		JPanel editarPaciente = new JPanel();
-		editarPaciente.setLayout(new GridLayout(12, 2, -1, 3));
+		editarPaciente.setLayout(new GridLayout(13, 2, -1, 3));
 		JFrame janelaRemoverPaciente = new JFrame("Remover");
-		janelaRemoverPaciente.setSize(560, 410);
+		janelaRemoverPaciente.setSize(560, 480);
 		janelaRemoverPaciente.setLocationRelativeTo(null);
 		janelaRemoverPaciente.setVisible(true);
 		janelaRemoverPaciente.add(editarPaciente);
@@ -239,10 +260,16 @@ public class InterfacePaciente {
 
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
-		JComboBox<String> ComboSexo = new JComboBox<String>();
-		ComboSexo.addItem("M");
-		ComboSexo.addItem("F");
-		ComboSexo.setSelectedItem(null);
+
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
+		JTextField txtsexo = new JTextField(5);
 		JLabel lblSexo = new JLabel("Sexo: ");
 		JLabel lblemail = new JLabel("Email: ");
 		JTextField txtemail = new JTextField(100);
@@ -284,8 +311,10 @@ public class InterfacePaciente {
 		editarPaciente.add(new JLabel());
 		editarPaciente.add(lblNome);
 		editarPaciente.add(txtNome);
+		editarPaciente.add(lblcpf);
+		editarPaciente.add(txtcpf);
 		editarPaciente.add(lblSexo);
-		editarPaciente.add(ComboSexo);
+		editarPaciente.add(txtsexo);
 		editarPaciente.add(lblemail);
 		editarPaciente.add(txtemail);
 		editarPaciente.add(lbltelefone);
@@ -303,8 +332,20 @@ public class InterfacePaciente {
 		editarPaciente.add(remover);
 		editarPaciente.add(fechartela);
 
+		txtNome.setBorder(null);
+		txtcpf.setBorder(null);
+		txtsexo.setBorder(null);
+		txtemail.setBorder(null);
+		txttelefone.setBorder(null);
+		txtrua.setBorder(null);
+		txtnumero.setBorder(null);
+		txtbairro.setBorder(null);
+		txtcidade.setBorder(null);
+		txtnascimento.setBorder(null);
+
 		txtNome.setEditable(false);
-		ComboSexo.setEnabled(false);
+		txtcpf.setEditable(false);
+		txtsexo.setEditable(false);
 		txtemail.setEditable(false);
 		txttelefone.setEditable(false);
 		txtrua.setEditable(false);
@@ -318,7 +359,8 @@ public class InterfacePaciente {
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
 			paciente = controllerPaciente.buscarPaciente(idtemp);
 			txtNome.setText(paciente.getNome());
-			ComboSexo.setSelectedItem(paciente.getSexo());
+			txtcpf.setText(paciente.getCpf());
+			txtsexo.setText(paciente.getSexo());
 			txtemail.setText(paciente.getEmail());
 			txttelefone.setText(paciente.getTelefonePaciente().getTelefone());
 			txtrua.setText(paciente.getEnderecoPaciente().getRua());
@@ -326,23 +368,19 @@ public class InterfacePaciente {
 			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
 			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
 			txtnascimento.setText(paciente.getNascimento());
-			txtNome.setEditable(false);
-			ComboSexo.setEnabled(false);
-			txtemail.setEditable(false);
-			txttelefone.setEditable(false);
-			txtrua.setEditable(false);
-			txtnumero.setEditable(false);
-			txtbairro.setEditable(false);
-			txtcidade.setEditable(false);
-			txtnascimento.setEditable(false);
 
+			/*
+			 * txtNome.setEditable(false); ComboSexo.setEnabled(false);
+			 * txtemail.setEditable(false); txttelefone.setEditable(false);
+			 * txtrua.setEditable(false); txtnumero.setEditable(false);
+			 * txtbairro.setEditable(false); txtcidade.setEditable(false);
+			 * txtnascimento.setEditable(false);
+			 */
 		});
 
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
-			controllerPaciente.removerpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerPaciente.removerpaciente(idtemp);
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {

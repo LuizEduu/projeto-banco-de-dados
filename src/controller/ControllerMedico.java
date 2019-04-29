@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+
 import dao.MedicoDao;
 import model.EnderecoMedico;
+import model.EnderecoPaciente;
 import model.Medico;
 import model.TelefoneMedico;
 
@@ -9,44 +12,40 @@ public class ControllerMedico {
 
 	MedicoDao dao = new MedicoDao();
 
-	public void cadastrarMedico(String nome, String sexo, String email, String especialidade, String telefone, String rua, String numero,
-			String bairro, String cidade, String datanascimento) {
+	public void cadastrarMedico(String nome, String cpf, String sexo, String especialidade, String crm, String telefone, String rua,
+			String numero, String bairro, String cidade) {
 
 		String telefonetemp = LimpaDados.limpatelefone(telefone);
-		String datatemp = LimpaDados.converterData(datanascimento);
-		Medico paciente = new Medico(nome, sexo, especialidade);
+		String cpftemp = LimpaDados.limpacpf(cpf);
+		Medico medico = new Medico(nome, cpftemp, sexo, especialidade, crm);
 		TelefoneMedico telefoneMedico = new TelefoneMedico(telefonetemp);
 		EnderecoMedico enderecoMedico = new EnderecoMedico(rua, numero, bairro, cidade);
-		//dao.Salvar(paciente, telefonePaciente, enderecoPaciente);
+		dao.Salvar(medico, telefoneMedico, enderecoMedico);
 	}
 
-	/*public Paciente buscarPaciente(Long id) {
-		Paciente retorno = dao.buscar(id);
-		String datatemp = LimpaDados.converterDataBusca(retorno.getNascimento());
-		retorno.setNascimento(datatemp);
+	public Medico buscarMedico(Long id) {
+		Medico retorno = dao.buscar(id);
 		return retorno;
-	
-	}
-	
-	public void atualizarpaciente(Long id, String nome, String sexo, String email, String telefone, String rua,
-			String numero, String bairro, String cidade, String datanascimento) {
-
-		String datatemp = LimpaDados.converterData(datanascimento);
-		Paciente paciente = new Paciente(nome, sexo, email, datatemp);
-		TelefonePaciente telefonePaciente = new TelefonePaciente(telefone);
-		EnderecoPaciente enderecoPaciente = new EnderecoPaciente(rua, numero, bairro, cidade);
-		dao.atualizarpaciente(id, paciente, telefonePaciente, enderecoPaciente);
 	}
 
-	public void removerpaciente(int id, String nome, String sexo, String email, String telefone, String rua,
-			String numero, String bairro, String cidade, String datanascimento) {
+	public void atualizarMedico(Long id, String nome, String cpf, String sexo, String especialidade, String crm,  String telefone,
+			String rua, String numero, String bairro, String cidade) {
+
+		String cpftemp = LimpaDados.limpacpf(cpf);
+		String telefonetemp = LimpaDados.limpatelefone(telefone);
+		Medico medico = new Medico(nome, cpftemp, sexo, especialidade, crm);
+		TelefoneMedico telefoneMedico = new TelefoneMedico(telefonetemp);
+		EnderecoPaciente enderecoMedico = new EnderecoPaciente(rua, numero, bairro, cidade);
+		dao.atualizarMedico(id, medico, telefoneMedico, enderecoMedico);
+	}
+
+	public void removerMedico(int id) {
 		dao.removerpaciente(id);
 	}
 
-	public ArrayList<Paciente> listarpaciente() {
-		ArrayList<Paciente> list = dao.Listar();
+	public ArrayList<Medico> listarMedico() {
+		ArrayList<Medico> list = dao.Listar();
 		return list;
 	}
-	
-	*/
+
 }

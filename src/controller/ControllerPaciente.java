@@ -11,12 +11,13 @@ public class ControllerPaciente {
 
 	PacienteDao dao = new PacienteDao();
 
-	public void cadastrarMedico(String nome, String sexo, String email, String telefone, String rua, String numero,
+	public void cadastrarPaciente(String nome, String cpf, String sexo, String email, String telefone, String rua, String numero,
 			String bairro, String cidade, String datanascimento) {
 
 		String telefonetemp = LimpaDados.limpatelefone(telefone);
 		String datatemp = LimpaDados.converterData(datanascimento);
-		Paciente paciente = new Paciente(nome, sexo, email, datatemp);
+		String cpftemp = LimpaDados.limpacpf(cpf);
+		Paciente paciente = new Paciente(nome, cpftemp,  sexo, email, datatemp);
 		TelefonePaciente telefonePaciente = new TelefonePaciente(telefonetemp);
 		EnderecoPaciente enderecoPaciente = new EnderecoPaciente(rua, numero, bairro, cidade);
 		dao.Salvar(paciente, telefonePaciente, enderecoPaciente);
@@ -29,18 +30,18 @@ public class ControllerPaciente {
 		return retorno;
 	}
 
-	public void atualizarpaciente(Long id, String nome, String sexo, String email, String telefone, String rua,
+	public void atualizarpaciente(Long id, String nome, String cpf,  String sexo, String email, String telefone, String rua,
 			String numero, String bairro, String cidade, String datanascimento) {
 
 		String datatemp = LimpaDados.converterData(datanascimento);
-		Paciente paciente = new Paciente(nome, sexo, email, datatemp);
+		String cpftemp = LimpaDados.limpacpf(cpf);
+		Paciente paciente = new Paciente(nome, cpftemp,  sexo, email, datatemp);
 		TelefonePaciente telefonePaciente = new TelefonePaciente(telefone);
 		EnderecoPaciente enderecoPaciente = new EnderecoPaciente(rua, numero, bairro, cidade);
 		dao.atualizarpaciente(id, paciente, telefonePaciente, enderecoPaciente);
 	}
 
-	public void removerpaciente(int id, String nome, String sexo, String email, String telefone, String rua,
-			String numero, String bairro, String cidade, String datanascimento) {
+	public void removerpaciente(int id) {
 		dao.removerpaciente(id);
 	}
 

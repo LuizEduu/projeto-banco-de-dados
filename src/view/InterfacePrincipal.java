@@ -9,6 +9,7 @@ import view.InterfacePaciente;
 
 public class InterfacePrincipal {
 	InterfacePaciente interfacePaciente = new InterfacePaciente();
+	InterfaceMedico interfaceMedico = new InterfaceMedico();
 
 	public void janelaprincipal() {
 		JMenuBar jBarraMenu = new JMenuBar();
@@ -77,12 +78,15 @@ public class InterfacePrincipal {
 		jPrincipal.setJMenuBar(jBarraMenu);
 
 		cadastrarPaciente(cadastrarpaciente);
-		
-		  editarPaciente(editarpaciente);
-		  removerPaciente(removerpaciente);
-		  listarPaciente(listarpaciente);
-		 
-		 
+		editarPaciente(editarpaciente);
+		removerPaciente(removerpaciente);
+		listarPaciente(listarpaciente);
+
+		cadastrarMedico(cadastrarMedico);
+		editarMedico(editarMedico);
+		removerMedico(removerMedico);
+		listarMedico(listarMedico);
+
 	}
 
 	private void cadastrarPaciente(JMenuItem cadastrarpaciente) {
@@ -91,17 +95,46 @@ public class InterfacePrincipal {
 		});
 	}
 
-	
-	 private void editarPaciente(JMenuItem editarpaciente) {
-	 editarpaciente.addActionListener(ActionEvent -> {
-	 interfacePaciente.editarpaciente(); }); }
-	
-	 private void removerPaciente(JMenuItem removerpaciente) {
-	 removerpaciente.addActionListener(ActionEvent -> {
-	 interfacePaciente.removerpaciente(); }); }
-	 
-	 private void listarPaciente(JMenuItem listarpaciente) {
-	 listarpaciente.addActionListener(ActionEvent -> {
-	 interfacePaciente.listarpaciente(); }); }
-	
+	private void editarPaciente(JMenuItem editarpaciente) {
+		editarpaciente.addActionListener(ActionEvent -> {
+			interfacePaciente.editarpaciente();
+		});
+	}
+
+	private void removerPaciente(JMenuItem removerpaciente) {
+		removerpaciente.addActionListener(ActionEvent -> {
+			interfacePaciente.removerpaciente();
+		});
+	}
+
+	private void listarPaciente(JMenuItem listarpaciente) {
+		listarpaciente.addActionListener(ActionEvent -> {
+			interfacePaciente.listarpaciente();
+		});
+	}
+
+	private void cadastrarMedico(JMenuItem cadastrarMedico) {
+		cadastrarMedico.addActionListener(ActionEvent -> {
+			interfaceMedico.cadastrarMedico();
+		});
+	}
+
+	private void editarMedico(JMenuItem editarMedico) {
+		editarMedico.addActionListener(ActionEvent -> {
+			interfaceMedico.editarMedico();
+		});
+	}
+
+	private void removerMedico(JMenuItem removerMedico) {
+		removerMedico.addActionListener(ActionEvent -> {
+			interfaceMedico.removerMedico();
+		});
+	}
+
+	private void listarMedico(JMenuItem listarMedico) {
+		listarMedico.addActionListener(ActionEvent -> {
+			interfaceMedico.listarMedico();
+		});
+	}
+
 }

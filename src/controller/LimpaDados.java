@@ -17,6 +17,12 @@ public class LimpaDados {
 		return datatemp;
 	}
 
+	public static String limpacpf(String cpf) {
+		String cpftemp = cpf.replaceAll("\\D", "");
+		cpftemp.trim();
+		return cpftemp;
+	}
+
 	public static String converterData(String data) {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
 		java.util.Date data_desejada = null;

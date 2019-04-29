@@ -3,7 +3,6 @@ package view;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -19,8 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerMedico;
-import controller.ControllerPaciente;
-import model.Paciente;
+import model.Medico;
 
 public class InterfaceMedico {
 
@@ -28,7 +26,7 @@ public class InterfaceMedico {
 
 	public void cadastrarMedico() {
 		JPanel cadastrarMedico = new JPanel();
-		cadastrarMedico.setLayout(new GridLayout(10, 2, -5, 3));
+		cadastrarMedico.setLayout(new GridLayout(11, 2, -5, 3));
 		JFrame janelaCadastrarMedico = new JFrame("Cadastrar");
 		janelaCadastrarMedico.setSize(560, 410);
 		janelaCadastrarMedico.setLocationRelativeTo(null);
@@ -38,6 +36,14 @@ public class InterfaceMedico {
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
 
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JComboBox<String> ComboSexo = new JComboBox<String>();
 		ComboSexo.addItem("M");
 		ComboSexo.addItem("F");
@@ -45,6 +51,8 @@ public class InterfaceMedico {
 		JLabel lblSexo = new JLabel("Sexo: ");
 		JLabel lblespecialidade = new JLabel("Especialidade: ");
 		JTextField txtespecialidade = new JTextField(100);
+		JLabel lblcrm = new JLabel("CRM: ");
+		JTextField txtcrm = new JTextField(100);
 		JLabel lbltelefone = new JLabel("Telefone: ");
 
 		MaskFormatter masktelefone = null;
@@ -64,25 +72,19 @@ public class InterfaceMedico {
 		JLabel lblcidade = new JLabel("Cidade: ");
 		JTextField txtcidade = new JTextField(100);
 
-		JLabel lbldatanascimento = new JLabel("Data Nascimento: ");
-
-		MaskFormatter masknascimento = null;
-		try {
-			masknascimento = new MaskFormatter("##/##/####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		JFormattedTextField txtnascimento = new JFormattedTextField(masknascimento);
-
 		JButton btnCadastrar = new JButton("Cadastrar");
 		JButton btnFecharcadastro = new JButton("Fechar Cadastro");
 
 		cadastrarMedico.add(lblNome);
 		cadastrarMedico.add(txtNome);
+		cadastrarMedico.add(lblcpf);
+		cadastrarMedico.add(txtcpf);
 		cadastrarMedico.add(lblSexo);
 		cadastrarMedico.add(ComboSexo);
 		cadastrarMedico.add(lblespecialidade);
 		cadastrarMedico.add(txtespecialidade);
+		cadastrarMedico.add(lblcrm);
+		cadastrarMedico.add(txtcrm);
 		cadastrarMedico.add(lbltelefone);
 		cadastrarMedico.add(txttelefone);
 		cadastrarMedico.add(lblrua);
@@ -93,25 +95,24 @@ public class InterfaceMedico {
 		cadastrarMedico.add(txtbairro);
 		cadastrarMedico.add(lblcidade);
 		cadastrarMedico.add(txtcidade);
-		cadastrarMedico.add(lbldatanascimento);
-		cadastrarMedico.add(txtnascimento);
 		cadastrarMedico.add(btnCadastrar);
 		cadastrarMedico.add(btnFecharcadastro);
 
 		btnCadastrar.addActionListener((ActionEvent) -> {
-			controllerMedico.cadas(txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtespecialidade.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerMedico.cadastrarMedico(txtNome.getText(), txtcpf.getText(), (String) ComboSexo.getSelectedItem(),
+					txtespecialidade.getText(), txtcrm.getText(), txttelefone.getText(), txtrua.getText(),
+					txtnumero.getText(), txtbairro.getText(), txtcidade.getText());
 
 			txtNome.setText(null);
+			txtcpf.setText(null);
 			ComboSexo.setSelectedItem(null);
 			txtespecialidade.setText(null);
+			txtcrm.setText(null);
 			txttelefone.setText(null);
 			txtrua.setText(null);
 			txtnumero.setText(null);
 			txtbairro.setText(null);
 			txtcidade.setText(null);
-			txtnascimento.setText(null);
 		});
 
 		btnFecharcadastro.addActionListener((ActionEvent) -> {
@@ -119,28 +120,38 @@ public class InterfaceMedico {
 		});
 	}
 
-	public void editarpaciente() {
-		JPanel editarPaciente = new JPanel();
-		editarPaciente.setLayout(new GridLayout(12, 2, -1, 3));
-		JFrame janelaEditarPaciente = new JFrame("Editar");
-		janelaEditarPaciente.setSize(560, 410);
-		janelaEditarPaciente.setLocationRelativeTo(null);
-		janelaEditarPaciente.setVisible(true);
-		janelaEditarPaciente.add(editarPaciente);
+	public void editarMedico() {
+		JPanel editarMedico = new JPanel();
+		editarMedico.setLayout(new GridLayout(13, 2, -1, 3));
+		JFrame janelaEditarMedico = new JFrame("Editar");
+		janelaEditarMedico.setSize(560, 480);
+		janelaEditarMedico.setLocationRelativeTo(null);
+		janelaEditarMedico.setVisible(true);
+		janelaEditarMedico.add(editarMedico);
 
 		JLabel lblid = new JLabel("ID: ");
 		JTextField txtid = new JTextField(100);
 		JButton botaobuscar = new JButton("Buscar");
-
 		JLabel lblNome = new JLabel("Nome: ");
+
 		JTextField txtNome = new JTextField(100);
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JComboBox<String> ComboSexo = new JComboBox<String>();
 		ComboSexo.addItem("M");
 		ComboSexo.addItem("F");
 		ComboSexo.setSelectedItem(null);
 		JLabel lblSexo = new JLabel("Sexo: ");
-		JLabel lblemail = new JLabel("Email: ");
-		JTextField txtemail = new JTextField(100);
+		JLabel lblespecialidade = new JLabel("Especialidade: ");
+		JLabel lblcrm = new JLabel("CRM: ");
+		JTextField txtcrm = new JTextField(10);
+		JTextField txtespecialidade = new JTextField(100);
 		JLabel lbltelefone = new JLabel("Telefone: ");
 
 		MaskFormatter masktelefone = null;
@@ -159,95 +170,95 @@ public class InterfaceMedico {
 		JTextField txtbairro = new JTextField(100);
 		JLabel lblcidade = new JLabel("Cidade: ");
 		JTextField txtcidade = new JTextField(100);
-		JLabel lbldatanascimento = new JLabel("Data Nascimento: ");
-		MaskFormatter masknascimento = null;
-
-		try {
-			masknascimento = new MaskFormatter("##/##/####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		JFormattedTextField txtnascimento = new JFormattedTextField(masknascimento);
 		JButton editar = new JButton("Editar");
 		JButton fecharRemocao = new JButton("Fechar Tela");
 
-		editarPaciente.add(lblid);
-		editarPaciente.add(txtid);
-		editarPaciente.add(botaobuscar);
-		editarPaciente.add(new JLabel());
-		editarPaciente.add(lblNome);
-		editarPaciente.add(txtNome);
-		editarPaciente.add(lblSexo);
-		editarPaciente.add(ComboSexo);
-		editarPaciente.add(lblemail);
-		editarPaciente.add(txtemail);
-		editarPaciente.add(lbltelefone);
-		editarPaciente.add(txttelefone);
-		editarPaciente.add(lblrua);
-		editarPaciente.add(txtrua);
-		editarPaciente.add(lblnumero);
-		editarPaciente.add(txtnumero);
-		editarPaciente.add(lblbairro);
-		editarPaciente.add(txtbairro);
-		editarPaciente.add(lblcidade);
-		editarPaciente.add(txtcidade);
-		editarPaciente.add(lbldatanascimento);
-		editarPaciente.add(txtnascimento);
-		editarPaciente.add(editar);
-		editarPaciente.add(fecharRemocao);
+		editarMedico.add(lblid);
+		editarMedico.add(txtid);
+		editarMedico.add(botaobuscar);
+		editarMedico.add(new JLabel());
+		editarMedico.add(lblNome);
+		editarMedico.add(txtNome);
+		editarMedico.add(lblcpf);
+		editarMedico.add(txtcpf);
+		editarMedico.add(lblSexo);
+		editarMedico.add(ComboSexo);
+		editarMedico.add(lblespecialidade);
+		editarMedico.add(txtespecialidade);
+		editarMedico.add(lblcrm);
+		editarMedico.add(txtcrm);
+		editarMedico.add(lbltelefone);
+		editarMedico.add(txttelefone);
+		editarMedico.add(lblrua);
+		editarMedico.add(txtrua);
+		editarMedico.add(lblnumero);
+		editarMedico.add(txtnumero);
+		editarMedico.add(lblbairro);
+		editarMedico.add(txtbairro);
+		editarMedico.add(lblcidade);
+		editarMedico.add(txtcidade);
+		editarMedico.add(editar);
+		editarMedico.add(fecharRemocao);
 
 		botaobuscar.addActionListener(ActionEvent -> {
-			Paciente paciente = new Paciente();
+			Medico medico = new Medico();
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerMedico.buscarPaciente(idtemp);
+			medico = controllerMedico.buscarMedico(idtemp);
 
-			txtNome.setText(paciente.getNome());
-			ComboSexo.setSelectedItem(paciente.getSexo());
-			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getTelefone());
-			txtrua.setText(paciente.getEnderecoPaciente().getRua());
-			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
-			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
-			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
-			txtnascimento.setText(paciente.getNascimento());
-
+			txtNome.setText(medico.getNome());
+			txtcpf.setText(medico.getCpf());
+			ComboSexo.setSelectedItem(medico.getSexo());
+			txtespecialidade.setText(medico.getEspecialidade());
+			txtcrm.setText(medico.getCrm());
+			txttelefone.setText(medico.getTelefoneMedico().getNumero());
+			txtrua.setText(medico.getEnderecoMedico().getRua());
+			txtnumero.setText(medico.getEnderecoMedico().getNumero());
+			txtbairro.setText(medico.getEnderecoMedico().getBairro());
+			txtcidade.setText(medico.getEnderecoMedico().getCidade());
 		});
 
 		editar.addActionListener(ActionEvent -> {
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerMedico.atualizarpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerMedico.atualizarMedico(idtemp, txtNome.getText(), txtcpf.getText(),
+					(String) ComboSexo.getSelectedItem(), txtespecialidade.getText(), txtcrm.getText(),
+					txttelefone.getText(), txtrua.getText(), txtnumero.getText(), txtbairro.getText(),
+					txtcidade.getText());
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
-			janelaEditarPaciente.dispose();
+			janelaEditarMedico.dispose();
 		});
 	}
 
-	public void removerpaciente() {
-		JPanel editarPaciente = new JPanel();
-		editarPaciente.setLayout(new GridLayout(12, 2, -1, 3));
-		JFrame janelaRemoverPaciente = new JFrame("Remover");
-		janelaRemoverPaciente.setSize(560, 410);
-		janelaRemoverPaciente.setLocationRelativeTo(null);
-		janelaRemoverPaciente.setVisible(true);
-		janelaRemoverPaciente.add(editarPaciente);
+	public void removerMedico() {
+		JPanel removerMedico = new JPanel();
+		removerMedico.setLayout(new GridLayout(13, 2, -1, 3));
+		JFrame janelaRemoverMedico = new JFrame("Remover");
+		janelaRemoverMedico.setSize(560, 480);
+		janelaRemoverMedico.setLocationRelativeTo(null);
+		janelaRemoverMedico.setVisible(true);
+		janelaRemoverMedico.add(removerMedico);
 
 		JLabel lblid = new JLabel("ID: ");
 		JTextField txtid = new JTextField(100);
 		JButton botaobuscar = new JButton("Buscar");
-
 		JLabel lblNome = new JLabel("Nome: ");
 		JTextField txtNome = new JTextField(20);
-		JComboBox<String> ComboSexo = new JComboBox<String>();
-		ComboSexo.addItem("M");
-		ComboSexo.addItem("F");
-		ComboSexo.setSelectedItem(null);
+		
+		MaskFormatter maskcpf = null;
+		try {
+			maskcpf = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblcpf = new JLabel("CPF");
+		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JLabel lblSexo = new JLabel("Sexo: ");
-		JLabel lblemail = new JLabel("Email: ");
-		JTextField txtemail = new JTextField(100);
+		JTextField txtsexo = new JTextField(10);
+		JLabel lblespecialidade = new JLabel("Especialidade: ");
+		JTextField txtespecialidade = new JTextField(100);
+		JLabel lblcrm = new JLabel("CRM: ");
+		JTextField txtcrm = new JTextField(10);
 		JLabel lbltelefone = new JLabel("Telefone: ");
 
 		MaskFormatter masktelefone = null;
@@ -267,138 +278,129 @@ public class InterfaceMedico {
 		JLabel lblcidade = new JLabel("Cidade: ");
 		JTextField txtcidade = new JTextField(100);
 
-		JLabel lbldatanascimento = new JLabel("Data Nascimento: ");
-
-		MaskFormatter masknascimento = null;
-		try {
-			masknascimento = new MaskFormatter("##/##/####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		JFormattedTextField txtnascimento = new JFormattedTextField(masknascimento);
-
 		JButton remover = new JButton("Remover");
 		JButton fechartela = new JButton("Fechar Tela");
 
-		editarPaciente.add(lblid);
-		editarPaciente.add(txtid);
-		editarPaciente.add(botaobuscar);
-		editarPaciente.add(new JLabel());
-		editarPaciente.add(lblNome);
-		editarPaciente.add(txtNome);
-		editarPaciente.add(lblSexo);
-		editarPaciente.add(ComboSexo);
-		editarPaciente.add(lblemail);
-		editarPaciente.add(txtemail);
-		editarPaciente.add(lbltelefone);
-		editarPaciente.add(txttelefone);
-		editarPaciente.add(lblrua);
-		editarPaciente.add(txtrua);
-		editarPaciente.add(lblnumero);
-		editarPaciente.add(txtnumero);
-		editarPaciente.add(lblbairro);
-		editarPaciente.add(txtbairro);
-		editarPaciente.add(lblcidade);
-		editarPaciente.add(txtcidade);
-		editarPaciente.add(lbldatanascimento);
-		editarPaciente.add(txtnascimento);
-		editarPaciente.add(remover);
-		editarPaciente.add(fechartela);
+		removerMedico.add(lblid);
+		removerMedico.add(txtid);
+		removerMedico.add(botaobuscar);
+		removerMedico.add(new JLabel());
+		removerMedico.add(lblNome);
+		removerMedico.add(txtNome);
+		removerMedico.add(lblcpf);
+		removerMedico.add(txtcpf);
+		removerMedico.add(lblSexo);
+		removerMedico.add(txtsexo);
+		removerMedico.add(lblespecialidade);
+		removerMedico.add(txtespecialidade);
+		removerMedico.add(lblcrm);
+		removerMedico.add(txtcrm);
+		removerMedico.add(lbltelefone);
+		removerMedico.add(txttelefone);
+		removerMedico.add(lblrua);
+		removerMedico.add(txtrua);
+		removerMedico.add(lblnumero);
+		removerMedico.add(txtnumero);
+		removerMedico.add(lblbairro);
+		removerMedico.add(txtbairro);
+		removerMedico.add(lblcidade);
+		removerMedico.add(txtcidade);
+		removerMedico.add(remover);
+		removerMedico.add(fechartela);
 
 		txtNome.setEditable(false);
-		ComboSexo.setEnabled(false);
-		txtemail.setEditable(false);
+		txtcpf.setEditable(false);
+		txtsexo.setEditable(false);
+		txtespecialidade.setEditable(false);
+		txtcrm.setEditable(false);
 		txttelefone.setEditable(false);
 		txtrua.setEditable(false);
 		txtnumero.setEditable(false);
 		txtbairro.setEditable(false);
 		txtcidade.setEditable(false);
-		txtnascimento.setEditable(false);
 
 		botaobuscar.addActionListener((ActionEvent) -> {
-			Paciente paciente = new Paciente();
+			Medico medico = new Medico();
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerMedico.buscarPaciente(idtemp);
-			txtNome.setText(paciente.getNome());
-			ComboSexo.setSelectedItem(paciente.getSexo());
-			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getTelefone());
-			txtrua.setText(paciente.getEnderecoPaciente().getRua());
-			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
-			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
-			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
-			txtnascimento.setText(paciente.getNascimento());
+			medico = controllerMedico.buscarMedico(idtemp);
+			txtNome.setText(medico.getNome());
+			txtcpf.setText(medico.getCpf());
+			txtsexo.setText(medico.getSexo());
+			txtespecialidade.setText(medico.getEspecialidade());
+			txtcrm.setText(medico.getCrm());
+			txttelefone.setText(medico.getTelefoneMedico().getNumero());
+			txtrua.setText(medico.getEnderecoMedico().getRua());
+			txtnumero.setText(medico.getEnderecoMedico().getNumero());
+			txtbairro.setText(medico.getEnderecoMedico().getBairro());
+			txtcidade.setText(medico.getEnderecoMedico().getCidade());
 			txtNome.setEditable(false);
-			ComboSexo.setEnabled(false);
-			txtemail.setEditable(false);
+			txtsexo.setEditable(false);
+			txtespecialidade.setEditable(false);
 			txttelefone.setEditable(false);
 			txtrua.setEditable(false);
 			txtnumero.setEditable(false);
 			txtbairro.setEditable(false);
 			txtcidade.setEditable(false);
-			txtnascimento.setEditable(false);
 
 		});
 
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
-			controllerMedico.removerpaciente(idtemp, txtNome.getText(), (String) ComboSexo.getSelectedItem(),
-					txtemail.getText(), txttelefone.getText(), txtrua.getText(), txtnumero.getText(),
-					txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			controllerMedico.removerMedico(idtemp);
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {
-			janelaRemoverPaciente.dispose();
+			janelaRemoverMedico.dispose();
 		});
 	}
 
-	public void listarpaciente() {
+	public void listarMedico() {
 
 		JTextField txtId = new JTextField(100);
 		JTextField txtNome = new JTextField(100);
 		JTextField txtsexo = new JTextField(100);
-		JTextField txtEmail = new JTextField(100);
+		JTextField txtespecialidade = new JTextField(100);
+		JTextField txtcrm = new JTextField(100);
 		JTextField txtTelefone = new JTextField(100);
 		JTextField txtRua = new JTextField(100);
 		JTextField txtNumero = new JTextField(100);
 		JTextField txtBairro = new JTextField(100);
 		JTextField txtCidade = new JTextField(100);
-		JTextField txtDataNascimento = new JTextField(100);
 
-		DefaultTableModel tabelaPaciente = new DefaultTableModel(null, new String[] { "ID", "Nome", "Sexo", "Email",
-				"Telefone", "Rua", "Numero", "Bairro", "Cidade", "Data Nascimento" });
+		DefaultTableModel tabelaMedico = new DefaultTableModel(null, new String[] { "ID", "Nome", "CPF", "Sexo",
+				"Especialidade", "CRM", "Telefone", "Rua", "Numero", "Bairro", "Cidade" });
 
 		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
 				"Vazio" };
 
-		ArrayList<Paciente> list = controllerMedico.listarpaciente();
+		ArrayList<Medico> list = controllerMedico.listarMedico();
 
 		if (list == null) {
-			tabelaPaciente.addRow(elementosvazio);
+			tabelaMedico.addRow(elementosvazio);
 
 		} else {
-			for (Paciente paciente : list) {
-				String idtemp = Long.toString(paciente.getId());
+			for (Medico medico : list) {
+				String idtemp = Long.toString(medico.getId());
 				txtId.setText(idtemp);
-				txtNome.setText(paciente.getNome());
-				txtsexo.setText(paciente.getSexo());
-				txtEmail.setText(paciente.getEmail());
-				txtTelefone.setText(paciente.getTelefonePaciente().getTelefone());
-				txtRua.setText(paciente.getEnderecoPaciente().getRua());
-				txtNumero.setText(paciente.getEnderecoPaciente().getNumero());
-				txtBairro.setText(paciente.getEnderecoPaciente().getBairro());
-				txtCidade.setText(paciente.getEnderecoPaciente().getCidade());
-				txtDataNascimento.setText(paciente.getNascimento());
+				txtNome.setText(medico.getNome());
+				txtsexo.setText(medico.getSexo());
+				txtespecialidade.setText(medico.getEspecialidade());
+				txtcrm.setText(medico.getCrm());
+				txtTelefone.setText(medico.getTelefoneMedico().getNumero());
+				txtRua.setText(medico.getEnderecoMedico().getRua());
+				txtNumero.setText(medico.getEnderecoMedico().getNumero());
+				txtBairro.setText(medico.getEnderecoMedico().getBairro());
+				txtCidade.setText(medico.getEnderecoMedico().getCidade());
 
-				tabelaPaciente.addRow(new String[] { txtId.getText(), txtNome.getText(), txtsexo.getText(),
-						txtEmail.getText(), txtTelefone.getText(), txtRua.getText(), txtNumero.getText(),
-						txtBairro.getText(), txtCidade.getText(), txtDataNascimento.getText() });
+				tabelaMedico.addRow(new String[] { txtId.getText(), txtNome.getText(), txtsexo.getText(),
+						txtespecialidade.getText(), txtTelefone.getText(), txtRua.getText(), txtNumero.getText(),
+						txtBairro.getText(), txtCidade.getText() });
 			}
 		}
 
-		JPanel listarPaciente = new JPanel();
-		listarPaciente.setLayout(new FlowLayout());
-		JTable tabela = new JTable(tabelaPaciente);
+		JPanel listarMedico = new JPanel();
+		listarMedico.setLayout(new FlowLayout());
+		JTable tabela = new JTable(tabelaMedico);
 
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(2);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(140);
@@ -412,11 +414,11 @@ public class InterfaceMedico {
 		tabela.setFillsViewportHeight(true);
 		JScrollPane scroll = new JScrollPane(tabela);
 		tabela.getTableHeader().setReorderingAllowed(false);
-		JFrame jlistarPaciente = new JFrame("Listagem Medicos");
-		jlistarPaciente.add(listarPaciente);
-		listarPaciente.add(scroll);
-		jlistarPaciente.setVisible(true);
-		jlistarPaciente.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		JFrame jListarMedico = new JFrame("Listagem Medicos");
+		jListarMedico.add(listarMedico);
+		listarMedico.add(scroll);
+		jListarMedico.setVisible(true);
+		jListarMedico.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 	}
 

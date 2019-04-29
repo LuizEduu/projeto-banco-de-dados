@@ -8,17 +8,19 @@ public class Paciente implements Serializable {
 
 	private Long id;
 	private String nome;
+	private String cpf;
 	private String sexo;
 	private String email;
 	private String nascimento;
-	private TelefonePaciente telefonePaciente = new TelefonePaciente();
-	private EnderecoPaciente enderecoPaciente = new EnderecoPaciente();
+	private TelefonePaciente telefonePaciente;
+	private EnderecoPaciente enderecoPaciente;
 
 	public Paciente() {
 	}
 
-	public Paciente(String nome, String sexo, String email, String nascimento) {
+	public Paciente(String nome, String cpf, String sexo, String email, String nascimento) {
 		this.nome = nome;
+		this.cpf = cpf;
 		this.sexo = sexo;
 		this.email = email;
 		this.nascimento = nascimento;
@@ -38,6 +40,16 @@ public class Paciente implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getSexo() {
