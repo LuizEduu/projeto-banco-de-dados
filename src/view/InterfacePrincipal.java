@@ -5,11 +5,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import view.InterfacePaciente;
-
 public class InterfacePrincipal {
 	InterfacePaciente interfacePaciente = new InterfacePaciente();
 	InterfaceMedico interfaceMedico = new InterfaceMedico();
+	InterfaceHospital interfaceHospital = new InterfaceHospital();
 
 	public void janelaprincipal() {
 		JMenuBar jBarraMenu = new JMenuBar();
@@ -72,7 +71,7 @@ public class InterfacePrincipal {
 		// Configuração Janela Principal
 		JFrame jPrincipal = new JFrame("Clinica");
 		jPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jPrincipal.setSize(390, 320);
+		jPrincipal.setSize(400, 300);
 		jPrincipal.setLocationRelativeTo(null);
 		jPrincipal.setVisible(true);
 		jPrincipal.setJMenuBar(jBarraMenu);
@@ -87,7 +86,13 @@ public class InterfacePrincipal {
 		removerMedico(removerMedico);
 		listarMedico(listarMedico);
 
+		cadastrarHospital(cadastrarHospital);
+		editarHospital(editarHospital);
+		removerHospital(removerHospital);
+		listarHospital(listarHospital);
+
 	}
+	
 
 	private void cadastrarPaciente(JMenuItem cadastrarpaciente) {
 		cadastrarpaciente.addActionListener(ActionEvent -> {
@@ -134,6 +139,30 @@ public class InterfacePrincipal {
 	private void listarMedico(JMenuItem listarMedico) {
 		listarMedico.addActionListener(ActionEvent -> {
 			interfaceMedico.listarMedico();
+		});
+	}
+
+	private void cadastrarHospital(JMenuItem cadastrarHospital) {
+		cadastrarHospital.addActionListener(ActionEvent -> {
+			interfaceHospital.cadastrarHospital();
+		});
+	}
+
+	private void editarHospital(JMenuItem editarHospital) {
+		editarHospital.addActionListener(ActionEvent -> {
+			interfaceHospital.editarHospital();
+		});
+	}
+
+	private void removerHospital(JMenuItem removerHospital) {
+		removerHospital.addActionListener(ActionEvent -> {
+			interfaceHospital.removerHospital();
+		});
+	}
+
+	private void listarHospital(JMenuItem listarHospital) {
+		listarHospital.addActionListener(ActionEvent -> {
+			interfaceHospital.listarHospital();
 		});
 	}
 

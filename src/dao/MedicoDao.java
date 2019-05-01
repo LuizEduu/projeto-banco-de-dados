@@ -185,9 +185,10 @@ public class MedicoDao {
 
 			while (resultSet.next()) {
 				Medico medico = new Medico();
-				medico.setId(resultSet.getLong("idpaciente"));
+				medico.setId(resultSet.getLong("idmedico"));
 				medico.setNome(resultSet.getString("nome"));
 				medico.setCpf(resultSet.getString("cpf"));
+				medico.setSexo(resultSet.getString("sexo"));
 				medico.setEspecialidade(resultSet.getString("especialidade"));
 				medico.setCrm(resultSet.getString("crm"));
 				medico.getTelefoneMedico().setNumero(resultSet.getString("numerotelefone"));

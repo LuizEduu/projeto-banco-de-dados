@@ -355,6 +355,17 @@ public class InterfacePaciente {
 		txtbairro.setEditable(false);
 		txtcidade.setEditable(false);
 		txtnascimento.setEditable(false);
+		
+		txtNome.setFont(txtNome.getFont().deriveFont(14f));
+		txtcpf.setFont(txtcpf.getFont().deriveFont(14f));
+		txtsexo.setFont(txtsexo.getFont().deriveFont(14f));
+		txtemail.setFont(txtemail.getFont().deriveFont(14f));
+		txttelefone.setFont(txttelefone.getFont().deriveFont(14f));
+		txtrua.setFont(txtrua.getFont().deriveFont(14f));
+		txtnumero.setFont(txtnumero.getFont().deriveFont(14f));
+		txtbairro.setFont(txtbairro.getFont().deriveFont(14f));
+		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
+		txtnascimento.setFont(txtnascimento.getFont().deriveFont(14f));
 
 		botaobuscar.addActionListener((ActionEvent) -> {
 			Paciente paciente = new Paciente();
@@ -371,13 +382,6 @@ public class InterfacePaciente {
 			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
 			txtnascimento.setText(paciente.getNascimento());
 
-			/*
-			 * txtNome.setEditable(false); ComboSexo.setEnabled(false);
-			 * txtemail.setEditable(false); txttelefone.setEditable(false);
-			 * txtrua.setEditable(false); txtnumero.setEditable(false);
-			 * txtbairro.setEditable(false); txtcidade.setEditable(false);
-			 * txtnascimento.setEditable(false);
-			 */
 		});
 
 		remover.addActionListener((ActionEvent) -> {
@@ -394,6 +398,7 @@ public class InterfacePaciente {
 
 		JTextField txtId = new JTextField(100);
 		JTextField txtNome = new JTextField(100);
+		JTextField txtcpf = new JTextField(100);
 		JTextField txtsexo = new JTextField(100);
 		JTextField txtEmail = new JTextField(100);
 		JTextField txtTelefone = new JTextField(100);
@@ -403,11 +408,11 @@ public class InterfacePaciente {
 		JTextField txtCidade = new JTextField(100);
 		JTextField txtDataNascimento = new JTextField(100);
 
-		DefaultTableModel tabelaPaciente = new DefaultTableModel(null, new String[] { "ID", "Nome", "Sexo", "Email",
-				"Telefone", "Rua", "Numero", "Bairro", "Cidade", "Data Nascimento" });
+		DefaultTableModel tabelaPaciente = new DefaultTableModel(null, new String[] { "ID", "Nome", "CPF", "Sexo",
+				"Email", "Telefone", "Rua", "Numero", "Bairro", "Cidade", "Data Nascimento" });
 
 		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
-				"Vazio" };
+				"Vazio", "Vazio" };
 
 		ArrayList<Paciente> list = controllerPaciente.listarpaciente();
 
@@ -419,6 +424,7 @@ public class InterfacePaciente {
 				String idtemp = Long.toString(paciente.getId());
 				txtId.setText(idtemp);
 				txtNome.setText(paciente.getNome());
+				txtcpf.setText(paciente.getCpf());
 				txtsexo.setText(paciente.getSexo());
 				txtEmail.setText(paciente.getEmail());
 				txtTelefone.setText(paciente.getTelefonePaciente().getNumero());
@@ -428,9 +434,9 @@ public class InterfacePaciente {
 				txtCidade.setText(paciente.getEnderecoPaciente().getCidade());
 				txtDataNascimento.setText(paciente.getNascimento());
 
-				tabelaPaciente.addRow(new String[] { txtId.getText(), txtNome.getText(), txtsexo.getText(),
-						txtEmail.getText(), txtTelefone.getText(), txtRua.getText(), txtNumero.getText(),
-						txtBairro.getText(), txtCidade.getText(), txtDataNascimento.getText() });
+				tabelaPaciente.addRow(new String[] { txtId.getText(), txtNome.getText(), txtcpf.getText(),
+						txtsexo.getText(), txtEmail.getText(), txtTelefone.getText(), txtRua.getText(),
+						txtNumero.getText(), txtBairro.getText(), txtCidade.getText(), txtDataNascimento.getText()});
 			}
 		}
 
@@ -440,10 +446,11 @@ public class InterfacePaciente {
 
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(2);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(140);
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(10);
-		tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
-		tabela.getColumnModel().getColumn(5).setPreferredWidth(120);
-		tabela.getColumnModel().getColumn(6).setPreferredWidth(20);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(10);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(150);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
+		tabela.getColumnModel().getColumn(6).setPreferredWidth(10);
 		tabela.getColumnModel().getColumn(7).setPreferredWidth(50);
 		tabela.setPreferredScrollableViewportSize(new Dimension(1366, 768));
 

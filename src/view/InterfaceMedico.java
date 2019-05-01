@@ -319,6 +319,28 @@ public class InterfaceMedico {
 		txtbairro.setEditable(false);
 		txtcidade.setEditable(false);
 
+		txtNome.setBorder(null);
+		txtcpf.setBorder(null);
+		txtsexo.setBorder(null);
+		txtespecialidade.setBorder(null);
+		txtcrm.setBorder(null);
+		txttelefone.setBorder(null);
+		txtrua.setBorder(null);
+		txtnumero.setBorder(null);
+		txtbairro.setBorder(null);
+		txtcidade.setBorder(null);
+
+		txtNome.setFont(txtNome.getFont().deriveFont(14f));
+		txtcpf.setFont(txtcpf.getFont().deriveFont(14f));
+		txtsexo.setFont(txtsexo.getFont().deriveFont(14f));
+		txtespecialidade.setFont(txtespecialidade.getFont().deriveFont(14f));
+		txtcrm.setFont(txtcrm.getFont().deriveFont(14f));
+		txttelefone.setFont(txttelefone.getFont().deriveFont(14f));
+		txtrua.setFont(txtrua.getFont().deriveFont(14f));
+		txtnumero.setFont(txtnumero.getFont().deriveFont(14f));
+		txtbairro.setFont(txtbairro.getFont().deriveFont(14f));
+		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
+
 		botaobuscar.addActionListener((ActionEvent) -> {
 			Medico medico = new Medico();
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
@@ -358,6 +380,7 @@ public class InterfaceMedico {
 
 		JTextField txtId = new JTextField(100);
 		JTextField txtNome = new JTextField(100);
+		JTextField txtcpf = new JTextField(100);
 		JTextField txtsexo = new JTextField(100);
 		JTextField txtespecialidade = new JTextField(100);
 		JTextField txtcrm = new JTextField(100);
@@ -371,7 +394,7 @@ public class InterfaceMedico {
 				"Especialidade", "CRM", "Telefone", "Rua", "Numero", "Bairro", "Cidade" });
 
 		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
-				"Vazio" };
+				"Vazio", "Vazio" };
 
 		ArrayList<Medico> list = controllerMedico.listarMedico();
 
@@ -383,6 +406,7 @@ public class InterfaceMedico {
 				String idtemp = Long.toString(medico.getId());
 				txtId.setText(idtemp);
 				txtNome.setText(medico.getNome());
+				txtcpf.setText(medico.getCpf());
 				txtsexo.setText(medico.getSexo());
 				txtespecialidade.setText(medico.getEspecialidade());
 				txtcrm.setText(medico.getCrm());
@@ -392,9 +416,9 @@ public class InterfaceMedico {
 				txtBairro.setText(medico.getEnderecoMedico().getBairro());
 				txtCidade.setText(medico.getEnderecoMedico().getCidade());
 
-				tabelaMedico.addRow(new String[] { txtId.getText(), txtNome.getText(), txtsexo.getText(),
-						txtespecialidade.getText(), txtTelefone.getText(), txtRua.getText(), txtNumero.getText(),
-						txtBairro.getText(), txtCidade.getText() });
+				tabelaMedico.addRow(new String[] { txtId.getText(), txtNome.getText(), txtcpf.getText(),
+						txtsexo.getText(), txtespecialidade.getText(), txtcrm.getText(), txtTelefone.getText(),
+						txtRua.getText(), txtNumero.getText(), txtBairro.getText(), txtCidade.getText() });
 			}
 		}
 
@@ -404,10 +428,11 @@ public class InterfaceMedico {
 
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(2);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(140);
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(10);
-		tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
-		tabela.getColumnModel().getColumn(5).setPreferredWidth(120);
-		tabela.getColumnModel().getColumn(6).setPreferredWidth(20);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(20);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
+		tabela.getColumnModel().getColumn(6).setPreferredWidth(70);
 		tabela.getColumnModel().getColumn(7).setPreferredWidth(50);
 		tabela.setPreferredScrollableViewportSize(new Dimension(1366, 768));
 
