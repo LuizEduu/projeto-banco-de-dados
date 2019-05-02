@@ -93,7 +93,6 @@ public class InterfacePrincipal {
 
 	}
 	
-
 	private void cadastrarPaciente(JMenuItem cadastrarpaciente) {
 		cadastrarpaciente.addActionListener(ActionEvent -> {
 			interfacePaciente.cadastrarpaciente();
