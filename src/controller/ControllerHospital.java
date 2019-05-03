@@ -29,7 +29,7 @@ public class ControllerHospital {
 
 	public ArrayList<Hospital> listarHospital() {
 		ArrayList<Hospital> arrayList = new ArrayList<Hospital>();
-		//arrayList = hospitalDao.listar();
+		arrayList = hospitalDao.Listar();
 		return arrayList;
 	}
 }

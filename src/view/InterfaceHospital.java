@@ -292,14 +292,13 @@ public class InterfaceHospital {
 		JTextField txtNome = new JTextField(100);
 		JTextField txtcnpj = new JTextField(100);
 		JTextField txtTelefone = new JTextField(100);
-		JTextField txtRua = new JTextField(100);
 		JTextField txtBairro = new JTextField(100);
 		JTextField txtCidade = new JTextField(100);
 
 		DefaultTableModel tabelaHospital = new DefaultTableModel(null,
-				new String[] { "ID", "Nome", "CNPJ", "Telefone", "Rua", "Bairro", "Cidade" });
+				new String[] { "ID", "Nome", "CNPJ", "Telefone", "Bairro", "Cidade" });
 
-		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio" };
+		String[] elementosvazio = {"Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio" };
 
 		ArrayList<Hospital> list = controllerHospital.listarHospital();
 
@@ -313,12 +312,11 @@ public class InterfaceHospital {
 				txtNome.setText(hospital.getNome());
 				txtcnpj.setText(hospital.getCnpj());
 				txtTelefone.setText(hospital.getTelefoneHospital().getNumerotelefone());
-				txtRua.setText(hospital.getRua());
 				txtBairro.setText(hospital.getBairro());
 				txtCidade.setText(hospital.getCidade());
 
 				tabelaHospital.addRow(new String[] { txtId.getText(), txtNome.getText(), txtcnpj.getText(),
-						txtTelefone.getText(), txtRua.getText(), txtBairro.getText(), txtCidade.getText() });
+						txtTelefone.getText(), txtBairro.getText(), txtCidade.getText() });
 			}
 		}
 

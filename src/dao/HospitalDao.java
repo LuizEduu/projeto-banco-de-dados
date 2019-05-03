@@ -140,18 +140,18 @@ public class HospitalDao {
 	public ArrayList<Hospital> Listar() {
 		ArrayList<Hospital> list = new ArrayList<Hospital>();
 		try {
-			String sql = "select h.nome, h.cnpj, t.numerotelefone, h.rua, h.bairro, , h.cidade " + "from hospital h "
-					+ "inner join telefonehospital t ON t.id_hospital = h.idhospital " + "where h.idhospital = ?";
+			String sql = "select h. idhospital, h.nome, h.cnpj, t.numerotelefone, h.bairro, h.cidade "
+						+ "from hospital h "
+						+ "inner join telefonehospital t ON t.id_hospital = h.idhospital";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				Hospital hospital = new Hospital();
-				hospital.setIdhospital(resultSet.getLong("idmedico"));
+				hospital.setIdhospital(resultSet.getLong("idhospital"));
 				hospital.setNome(resultSet.getString("nome"));
 				hospital.setCnpj(resultSet.getString("cnpj"));
-				hospital.setRua(resultSet.getString("rua"));
 				hospital.setBairro(resultSet.getString("bairro"));
 				hospital.setCidade(resultSet.getString("cidade"));
 				hospital.getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefone"));
