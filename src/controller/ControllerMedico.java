@@ -14,8 +14,8 @@ public class ControllerMedico {
 	public void cadastrarMedico(String nome, String cpf, String sexo, String especialidade, String crm, String telefone, String rua,
 			String numero, String bairro, String cidade) {
 
-		String telefonetemp = LimpaDados.limpatelefone(telefone);
-		String cpftemp = LimpaDados.limpacpf(cpf);
+		String telefonetemp = LimpaDados.limpaAll(telefone);
+		String cpftemp = LimpaDados.limpaAll(cpf);
 		Medico medico = new Medico(nome, cpftemp, sexo, especialidade, crm);
 		TelefoneMedico telefoneMedico = new TelefoneMedico(telefonetemp);
 		EnderecoMedico enderecoMedico = new EnderecoMedico(rua, numero, bairro, cidade);
@@ -30,8 +30,8 @@ public class ControllerMedico {
 	public void atualizarMedico(Long id, String nome, String cpf, String sexo, String especialidade, String crm,  String telefone,
 			String rua, String numero, String bairro, String cidade) {
 
-		String cpftemp = LimpaDados.limpacpf(cpf);
-		String telefonetemp = LimpaDados.limpatelefone(telefone);
+		String cpftemp = LimpaDados.limpaAll(cpf);
+		String telefonetemp = LimpaDados.limpaAll(telefone);
 		Medico medico = new Medico(nome, cpftemp, sexo, especialidade, crm);
 		TelefoneMedico telefoneMedico = new TelefoneMedico(telefonetemp);
 		EnderecoMedico enderecoMedico = new EnderecoMedico(rua, numero, bairro, cidade);

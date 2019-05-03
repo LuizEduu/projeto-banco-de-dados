@@ -5,22 +5,10 @@ import java.text.SimpleDateFormat;
 
 public class LimpaDados {
 
-	public static String limpatelefone(String telefone) {
-		String telefonetemp = telefone.replaceAll("\\D", "");
-		telefonetemp.trim();
-		return telefonetemp;
-	}
-
-	public static String limpadatanascimento(String datanacimento) {
-		String datatemp = datanacimento.replaceAll("\\D", "");
-		datatemp.trim();
-		return datatemp;
-	}
-
-	public static String limpacpf(String cpf) {
-		String cpftemp = cpf.replaceAll("\\D", "");
-		cpftemp.trim();
-		return cpftemp;
+	public static String limpaAll(String string) {
+		String stringtemp = string.replaceAll("\\D", "");
+		stringtemp.trim();
+		return stringtemp;
 	}
 
 	public static String converterData(String data) {

@@ -58,7 +58,7 @@ public class HospitalDao {
 	public Hospital buscar(Long id) {
 		Hospital hospital = new Hospital();
 		try {
-			String sql = "select h.nome, h.cnpj, t.numerotelefone, h.rua, h.bairro, , h.cidade " + "from hospital h "
+			String sql = "select h.nome, h.cnpj, t.numerotelefone, h.rua, h.bairro, h.cidade " + "from hospital h "
 					+ "inner join telefonehospital t ON t.id_hospital = h.idhospital " + "where h.idhospital = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -86,7 +86,7 @@ public class HospitalDao {
 
 	public void atualizarHospital(Long id, Hospital hospital, TelefoneHospital telefoneHospital) {
 		try {
-			String sql = "update hospital set nome= ?, set cnpj= ?, rua= ?, bairro= ?, cidade= ?, where idhospital= ?";
+			String sql = "update hospital set nome= ?,  cnpj= ?,  rua= ?,  bairro= ?,  cidade= ? where idhospital= ?";
 			String sql2 = "update telefonehospital set numerotelefone= ? where id_hospital= ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -115,7 +115,7 @@ public class HospitalDao {
 		}
 	}
 
-	public void removerHospital(int id) {
+	public void removerHospital(long id) {
 
 		try {
 
@@ -123,8 +123,8 @@ public class HospitalDao {
 			String sql2 = "delete from hospital where idhospital = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
-			preparedStatement.setInt(1, id);
-			preparedStatement2.setInt(1, id);
+			preparedStatement.setLong(1, id);
+			preparedStatement2.setLong(1, id);
 			preparedStatement.executeUpdate();
 			preparedStatement2.executeUpdate();
 			connection.commit();
@@ -141,8 +141,7 @@ public class HospitalDao {
 		ArrayList<Hospital> list = new ArrayList<Hospital>();
 		try {
 			String sql = "select h. idhospital, h.nome, h.cnpj, t.numerotelefone, h.bairro, h.cidade "
-						+ "from hospital h "
-						+ "inner join telefonehospital t ON t.id_hospital = h.idhospital";
+					+ "from hospital h " + "inner join telefonehospital t ON t.id_hospital = h.idhospital";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();

@@ -174,6 +174,12 @@ public class InterfaceHospital {
 			Long idtemp = (long) Integer.parseInt(txtid.getText());
 			controllerHospital.atualizarHospital(idtemp, txtNome.getText(), txtcnpj.getText(), txttelefone.getText(),
 					txtrua.getText(), txtbairro.getText(), txtcidade.getText());
+			txtNome.setText(null);
+			txtcnpj.setText(null);
+			txttelefone.setText(null);
+			txtrua.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
@@ -298,7 +304,7 @@ public class InterfaceHospital {
 		DefaultTableModel tabelaHospital = new DefaultTableModel(null,
 				new String[] { "ID", "Nome", "CNPJ", "Telefone", "Bairro", "Cidade" });
 
-		String[] elementosvazio = {"Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio" };
+		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio" };
 
 		ArrayList<Hospital> list = controllerHospital.listarHospital();
 
@@ -325,13 +331,11 @@ public class InterfaceHospital {
 		JTable tabela = new JTable(tabelaHospital);
 
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(2);
-		tabela.getColumnModel().getColumn(1).setPreferredWidth(140);
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tabela.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
 		tabela.getColumnModel().getColumn(3).setPreferredWidth(10);
-		tabela.getColumnModel().getColumn(4).setPreferredWidth(150);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(100);
 		tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
-		tabela.getColumnModel().getColumn(6).setPreferredWidth(10);
-		tabela.getColumnModel().getColumn(7).setPreferredWidth(50);
 		tabela.setPreferredScrollableViewportSize(new Dimension(1366, 768));
 
 		tabela.setFillsViewportHeight(true);

@@ -14,9 +14,9 @@ public class ControllerPaciente {
 	public void cadastrarPaciente(String nome, String cpf, String sexo, String email, String telefone, String rua, String numero,
 			String bairro, String cidade, String datanascimento) {
 
-		String telefonetemp = LimpaDados.limpatelefone(telefone);
+		String telefonetemp = LimpaDados.limpaAll(telefone);
 		String datatemp = LimpaDados.converterData(datanascimento);
-		String cpftemp = LimpaDados.limpacpf(cpf);
+		String cpftemp = LimpaDados.limpaAll(cpf);
 		Paciente paciente = new Paciente(nome, cpftemp,  sexo, email, datatemp);
 		TelefonePaciente telefonePaciente = new TelefonePaciente(telefonetemp);
 		EnderecoPaciente enderecoPaciente = new EnderecoPaciente(rua, numero, bairro, cidade);
@@ -34,7 +34,7 @@ public class ControllerPaciente {
 			String numero, String bairro, String cidade, String datanascimento) {
 
 		String datatemp = LimpaDados.converterData(datanascimento);
-		String cpftemp = LimpaDados.limpacpf(cpf);
+		String cpftemp = LimpaDados.limpaAll(cpf);
 		Paciente paciente = new Paciente(nome, cpftemp,  sexo, email, datatemp);
 		TelefonePaciente telefonePaciente = new TelefonePaciente(telefone);
 		EnderecoPaciente enderecoPaciente = new EnderecoPaciente(rua, numero, bairro, cidade);

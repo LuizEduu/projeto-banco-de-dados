@@ -1,19 +1,22 @@
 package model;
 
-public class Hospital {
+import java.io.Serializable;
 
+public class Hospital implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private long idhospital;
 	private String nome;
 	private String cnpj;
 	private String rua;
 	private String bairro;
 	private String cidade;
-	private TelefoneHospital telefoneHospital;
+	private TelefoneHospital telefoneHospital = new TelefoneHospital();
 
 	public Hospital() {
 	}
 
-	public Hospital(long idhospital, String nome, String cnpj, String rua, String bairro, String cidade) {
+	public Hospital(String nome, String cnpj, String rua, String bairro, String cidade) {
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.rua = rua;
