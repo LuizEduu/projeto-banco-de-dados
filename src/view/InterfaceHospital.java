@@ -201,7 +201,7 @@ public class InterfaceHospital {
 		JButton botaobuscar = new JButton("Buscar");
 
 		JLabel lblNome = new JLabel("Nome: ");
-		JTextField txtNome = new JTextField(20);
+		JTextField txtNome = new JTextField(100);
 
 		MaskFormatter maskcnpj = null;
 		try {

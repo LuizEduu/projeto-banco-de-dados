@@ -42,7 +42,7 @@ public class InterfacePaciente {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JLabel lblcpf = new JLabel("CPF");
+		JLabel lblcpf = new JLabel("CPF: ");
 		JFormattedTextField txtcpf = new JFormattedTextField(maskcpf);
 		JComboBox<String> ComboSexo = new JComboBox<String>();
 		ComboSexo.addItem("M");

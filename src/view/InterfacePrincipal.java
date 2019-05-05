@@ -9,6 +9,7 @@ public class InterfacePrincipal {
 	InterfacePaciente interfacePaciente = new InterfacePaciente();
 	InterfaceMedico interfaceMedico = new InterfaceMedico();
 	InterfaceHospital interfaceHospital = new InterfaceHospital();
+	InterfaceConsulta interfaceConsulta = new InterfaceConsulta();
 
 	public void janelaprincipal() {
 		JMenuBar jBarraMenu = new JMenuBar();
@@ -68,6 +69,20 @@ public class InterfacePrincipal {
 		MenuConsulta.addSeparator();
 		MenuConsulta.add(Listar);
 
+		JMenu MenuInternacao = new JMenu("Internacao");
+		jBarraMenu.add(MenuInternacao);
+		JMenuItem RegistrarInternacao = new JMenuItem("Registrar");
+		JMenuItem EditarInternacao = new JMenuItem("EditarInternacao");
+		JMenuItem FinalizarInternacao = new JMenuItem("Finalizar");
+		JMenuItem RelatorioInternacoes = new JMenuItem("Relatorio");
+		MenuInternacao.add(RegistrarInternacao);
+		MenuInternacao.addSeparator();
+		MenuInternacao.add(EditarInternacao);
+		MenuInternacao.addSeparator();
+		MenuInternacao.add(FinalizarInternacao);
+		MenuInternacao.addSeparator();
+		MenuInternacao.add(RelatorioInternacoes);
+
 		// Configuração Janela Principal
 		JFrame jPrincipal = new JFrame("Clinica");
 		jPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,8 +106,10 @@ public class InterfacePrincipal {
 		removerHospital(removerHospital);
 		listarHospital(listarHospital);
 
+		agendarConsulta(Agendar);
+
 	}
-	
+
 	private void cadastrarPaciente(JMenuItem cadastrarpaciente) {
 		cadastrarpaciente.addActionListener(ActionEvent -> {
 			interfacePaciente.cadastrarpaciente();
@@ -162,6 +179,12 @@ public class InterfacePrincipal {
 	private void listarHospital(JMenuItem listarHospital) {
 		listarHospital.addActionListener(ActionEvent -> {
 			interfaceHospital.listarHospital();
+		});
+	}
+
+	private void agendarConsulta(JMenuItem agendarConsulta) {
+		agendarConsulta.addActionListener(ActionEvent -> {
+			interfaceConsulta.agendarConsulta();
 		});
 	}
 
