@@ -21,14 +21,15 @@ public class ControllerConsulta {
 
 	public Hospital buscarDadosHospital(String cnpjHospital) {
 		Hospital hospital = new Hospital();
-		hospital = consultaDao.BuscarDadosHospital(cnpjHospital);
+		String cnpjtemp = LimpaDados.limpaAll(cnpjHospital);
+		hospital = consultaDao.BuscarDadosHospital(cnpjtemp);
 		return hospital;
-
 	}
 
 	public Medico buscarDadosMedico(String cpf) {
 		Medico medico = new Medico();
-		medico = consultaDao.BuscarDadosMedico(cpf);
+		String cpftemp = LimpaDados.limpaAll(cpf);
+		medico = consultaDao.BuscarDadosMedico(cpftemp);
 		return medico;
 	}
 }

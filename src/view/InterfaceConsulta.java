@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -13,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerConsulta;
+import model.Hospital;
+import model.Medico;
 import model.Paciente;
 
 public class InterfaceConsulta {
@@ -29,6 +32,7 @@ public class InterfaceConsulta {
 		janelaAgendarConsulta.setVisible(true);
 		janelaAgendarConsulta.add(agendarConsulta);
 		janelaAgendarConsulta.add(agendarConsulta2, BorderLayout.PAGE_END);
+	
 
 		MaskFormatter maskcpf = null;
 		try {
@@ -113,6 +117,10 @@ public class InterfaceConsulta {
 		agendarConsulta.add(txtTelefonePaciente);
 		agendarConsulta.add(lblsexo);
 		agendarConsulta.add(txtsexo);
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
 		agendarConsulta.add(lblcnpjHospital);
 		agendarConsulta.add(txtcpnjHospital);
 		agendarConsulta.add(botaoBuscarHospital);
@@ -129,6 +137,10 @@ public class InterfaceConsulta {
 		agendarConsulta.add(txtbairro);
 		agendarConsulta.add(lblcidade);
 		agendarConsulta.add(txtcidade);
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
 		agendarConsulta.add(lblcpfmedico);
 		agendarConsulta.add(txtcpfmedico);
 		agendarConsulta.add(botaobuscarMedico);
@@ -214,6 +226,27 @@ public class InterfaceConsulta {
 			txtcpfpaciente2.setText(txtcpfpaciente.getText());
 			txtTelefonePaciente.setText(paciente.getTelefonePaciente().getNumero());
 			txtsexo.setText(paciente.getSexo());
+		});
+		
+		botaoBuscarHospital.addActionListener(ActionEvent ->{
+			Hospital hospital = new Hospital();
+			hospital = controllerConsulta.buscarDadosHospital(txtcpnjHospital.getText());
+			txtNomeHospital.setText(hospital.getNome());
+			txtcpnj.setText(hospital.getCnpj());
+			txtTelefoneHospital.setText(hospital.getTelefoneHospital().getNumerotelefone());
+			txtrua.setText(hospital.getRua());
+			txtbairro.setText(hospital.getBairro());
+			txtcidade.setText(hospital.getCidade());
+			
+		});
+		
+		botaobuscarMedico.addActionListener(ActionEvent ->{
+			Medico medico = new Medico();
+			medico = controllerConsulta.buscarDadosMedico(txtcpfmedico.getText());
+			txtNomeMedico.setText(medico.getNome());
+			txtcpfmedico2.setText(medico.getCpf());
+			txtcrmMedico.setText(medico.getCrm());
+			txtespecialidade.setText(medico.getEspecialidade());
 		});
 	}
 }
