@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -20,19 +19,23 @@ import model.Paciente;
 
 public class InterfaceConsulta {
 	ControllerConsulta controllerConsulta = new ControllerConsulta();
+	Paciente paciente = new Paciente();
+	Hospital hospital = new Hospital();
+	Medico medico = new Medico();
+	long idtempPaciente;
+	long idtempHospital;
+	long idtempMedico;
 
 	public void agendarConsulta() {
-
 		JPanel agendarConsulta = new JPanel();
 		JPanel agendarConsulta2 = new JPanel();
-		agendarConsulta.setLayout(new GridLayout(13,4,2,1));
+		agendarConsulta.setLayout(new GridLayout(13, 4, 2, 1));
 		JFrame janelaAgendarConsulta = new JFrame("Agendar Consulta");
 		janelaAgendarConsulta.setSize(700, 600);
 		janelaAgendarConsulta.setLocationRelativeTo(null);
 		janelaAgendarConsulta.setVisible(true);
 		janelaAgendarConsulta.add(agendarConsulta);
 		janelaAgendarConsulta.add(agendarConsulta2, BorderLayout.PAGE_END);
-	
 
 		MaskFormatter maskcpf = null;
 		try {
@@ -98,10 +101,8 @@ public class InterfaceConsulta {
 		JTextField txtcrmMedico = new JTextField(100);
 		JLabel lblbespcialidade = new JLabel("Especialidade: ");
 		JTextField txtespecialidade = new JTextField(10);
-
 		JLabel lbldiagnostico = new JLabel("Diagnostico: ");
 		JTextField txtdiagnostico = new JTextField(500);
-
 		JButton botaoAgendarConsulta = new JButton("Agendar Consulta");
 		JButton fecharjanela = new JButton("Fechar Janela");
 
@@ -152,13 +153,13 @@ public class InterfaceConsulta {
 		agendarConsulta.add(lblcrmMedico);
 		agendarConsulta.add(txtcrmMedico);
 		agendarConsulta.add(lblbespcialidade);
-		txtespecialidade.setPreferredSize(new Dimension(200,200));
+		txtespecialidade.setPreferredSize(new Dimension(200, 200));
 		agendarConsulta.add(txtespecialidade);
 		agendarConsulta.add(lbldiagnostico);
 		agendarConsulta.add(txtdiagnostico);
 		agendarConsulta2.add(botaoAgendarConsulta);
 		agendarConsulta2.add(fecharjanela);
-		
+
 		txtcpfpaciente2.setBorder(null);
 		txtNomePaciente.setBorder(null);
 		txtTelefonePaciente.setBorder(null);
@@ -218,18 +219,19 @@ public class InterfaceConsulta {
 		txtrua.setFont(txtrua.getFont().deriveFont(14f));
 		txtbairro.setFont(txtbairro.getFont().deriveFont(14f));
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
+
 		
-		botaoBuscarPaciente.addActionListener(ActionListener ->{
-			Paciente paciente = new Paciente();
+		botaoBuscarPaciente.addActionListener(ActionListener -> {
 			paciente = controllerConsulta.buscarDadosPaciente(txtcpfpaciente.getText());
 			txtNomePaciente.setText(paciente.getNome());
-			txtcpfpaciente2.setText(txtcpfpaciente.getText());
+			txtcpfpaciente2.setText(paciente.getCpf());
 			txtTelefonePaciente.setText(paciente.getTelefonePaciente().getNumero());
 			txtsexo.setText(paciente.getSexo());
+			idtempPaciente = paciente.getId();
+			
 		});
-		
-		botaoBuscarHospital.addActionListener(ActionEvent ->{
-			Hospital hospital = new Hospital();
+
+		botaoBuscarHospital.addActionListener(ActionEvent -> {
 			hospital = controllerConsulta.buscarDadosHospital(txtcpnjHospital.getText());
 			txtNomeHospital.setText(hospital.getNome());
 			txtcpnj.setText(hospital.getCnpj());
@@ -237,16 +239,21 @@ public class InterfaceConsulta {
 			txtrua.setText(hospital.getRua());
 			txtbairro.setText(hospital.getBairro());
 			txtcidade.setText(hospital.getCidade());
-			
+			idtempHospital = hospital.getIdhospital();
+
 		});
-		
-		botaobuscarMedico.addActionListener(ActionEvent ->{
-			Medico medico = new Medico();
+
+		botaobuscarMedico.addActionListener(ActionEvent -> {
 			medico = controllerConsulta.buscarDadosMedico(txtcpfmedico.getText());
 			txtNomeMedico.setText(medico.getNome());
 			txtcpfmedico2.setText(medico.getCpf());
 			txtcrmMedico.setText(medico.getCrm());
 			txtespecialidade.setText(medico.getEspecialidade());
+			idtempMedico = medico.getId();
+		});
+
+		botaoAgendarConsulta.addActionListener(ActionEvent -> {
+			controllerConsulta.agendarConsulta(txtdiagnostico.getText(), idtempPaciente, idtempHospital, idtempMedico);
 		});
 	}
 }

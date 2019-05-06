@@ -5,15 +5,14 @@ public class Consulta {
 	private long idconsulta;
 	private String dataconsulta;
 	private String diagnostico;
-	private String id_paciente;
-	private String id_hospital;
-	private String id_medico;
+	private long id_paciente;
+	private long id_hospital;
+	private long id_medico;
 
 	public Consulta() {
 	}
 
-	public Consulta(String dataconsulta, String diagnostico, String id_paciente, String id_medico, String id_hospital) {
-		this.dataconsulta = dataconsulta;
+	public Consulta(String diagnostico, long id_paciente, long id_medico, long id_hospital) {
 		this.diagnostico = diagnostico;
 		this.id_paciente = id_paciente;
 		this.id_hospital = id_hospital;
@@ -44,27 +43,27 @@ public class Consulta {
 		this.diagnostico = diagnostico;
 	}
 
-	public String getId_paciente() {
+	public long getId_paciente() {
 		return id_paciente;
 	}
 
-	public void setId_paciente(String id_paciente) {
+	public void setId_paciente(long id_paciente) {
 		this.id_paciente = id_paciente;
 	}
 
-	public String getId_hospital() {
+	public long getId_hospital() {
 		return id_hospital;
 	}
 
-	public void setId_hospital(String id_hospital) {
+	public void setId_hospital(long id_hospital) {
 		this.id_hospital = id_hospital;
 	}
 
-	public String getId_medico() {
+	public long getId_medico() {
 		return id_medico;
 	}
 
-	public void setId_medico(String id_medico) {
+	public void setId_medico(long id_medico) {
 		this.id_medico = id_medico;
 	}
 
