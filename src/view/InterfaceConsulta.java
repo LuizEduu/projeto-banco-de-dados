@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -28,29 +27,36 @@ public class InterfaceConsulta {
 
 	public void agendarConsulta() {
 		JPanel agendarConsulta = new JPanel();
-		JPanel agendarConsulta2 = new JPanel();
-		agendarConsulta.setLayout(new GridLayout(13, 4, 2, 1));
+		agendarConsulta.setLayout(new GridLayout(14, 4, 2, 1));
 		JFrame janelaAgendarConsulta = new JFrame("Agendar Consulta");
 		janelaAgendarConsulta.setSize(700, 600);
 		janelaAgendarConsulta.setLocationRelativeTo(null);
 		janelaAgendarConsulta.setVisible(true);
 		janelaAgendarConsulta.add(agendarConsulta);
-		janelaAgendarConsulta.add(agendarConsulta2, BorderLayout.PAGE_END);
 
-		MaskFormatter maskcpf = null;
+		MaskFormatter maskcpfbusca = null;
 		try {
-			maskcpf = new MaskFormatter("###.###.###-##");
+			maskcpfbusca = new MaskFormatter("###.###.###-##");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		MaskFormatter maskcpfpaciente = null;
+		try {
+			maskcpfpaciente = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		JLabel lblcpfpaciente = new JLabel("CPF Paciente: ");
-		JFormattedTextField txtcpfpaciente = new JFormattedTextField(maskcpf);
+		JFormattedTextField txtcpfpaciente = new JFormattedTextField(maskcpfbusca);
 		JButton botaoBuscarPaciente = new JButton("Buscar Paciente");
 		JLabel lblNomePaciente = new JLabel("Nome Paciente: ");
 		JTextField txtNomePaciente = new JTextField(100);
 		JLabel lblcpfpaciente2 = new JLabel("CPF Paciente: ");
-		JFormattedTextField txtcpfpaciente2 = new JFormattedTextField(maskcpf);
+		JFormattedTextField txtcpfpaciente2 = new JFormattedTextField(maskcpfpaciente);
 		JLabel lbltelefonePaciente = new JLabel("Telefone Paciente: ");
+		
 		MaskFormatter masktelefone = null;
 		try {
 			masktelefone = new MaskFormatter("(##)####-####");
@@ -67,21 +73,29 @@ public class InterfaceConsulta {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		MaskFormatter maskcnpj2 = null;
+		try {
+			maskcnpj2 = new MaskFormatter("##.###.###/####-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		MaskFormatter masktelefonemedico = null;
+		try {
+			masktelefonemedico = new MaskFormatter("(##)####-####");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JLabel lblcnpjHospital = new JLabel("CNPJ Hospital: ");
 		JFormattedTextField txtcpnjHospital = new JFormattedTextField(maskcnpj);
 		JButton botaoBuscarHospital = new JButton("Buscar Hospital");
 		JLabel lblNomeHospital = new JLabel("Hospital: ");
 		JTextField txtNomeHospital = new JTextField(100);
 		JLabel lblcpnjhospital2 = new JLabel("CNPJ Hospital: ");
-		JFormattedTextField txtcpnj = new JFormattedTextField(maskcnpj);
+		JFormattedTextField txtcpnj = new JFormattedTextField(maskcnpj2);
 		JLabel lbltelefoneHospital = new JLabel("Telefone Hospital: ");
-		try {
-			masktelefone = new MaskFormatter("(##)####-####");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		JFormattedTextField txtTelefoneHospital = new JFormattedTextField(masktelefone);
+		JFormattedTextField txtTelefoneHospital = new JFormattedTextField(masktelefonemedico);
 		JLabel lblrua = new JLabel("Rua: ");
 		JTextField txtrua = new JTextField(100);
 		JTextField txtnumero = new JTextField(100);
@@ -89,14 +103,28 @@ public class InterfaceConsulta {
 		JTextField txtbairro = new JTextField(100);
 		JLabel lblcidade = new JLabel("Cidade: ");
 		JTextField txtcidade = new JTextField(100);
+		
+		MaskFormatter maskcpfmedico = null;
+		try {
+			maskcpfmedico = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		MaskFormatter maskcpfmedico2 = null;
+		try {
+			maskcpfmedico2 = new MaskFormatter("###.###.###-##");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		JLabel lblcpfmedico = new JLabel("CPF Medico: ");
-		JFormattedTextField txtcpfmedico = new JFormattedTextField(maskcpf);
+		JFormattedTextField txtcpfmedico = new JFormattedTextField(maskcpfmedico);
 		JButton botaobuscarMedico = new JButton("Buscar Medico");
 		JLabel lblNomeMedico = new JLabel("Nome Medico: ");
 		JTextField txtNomeMedico = new JTextField(100);
 		JLabel lblcpfmedico2 = new JLabel("CPF Medico: ");
-		JFormattedTextField txtcpfmedico2 = new JFormattedTextField(maskcpf);
+		JFormattedTextField txtcpfmedico2 = new JFormattedTextField(maskcpfmedico2);
 		JLabel lblcrmMedico = new JLabel("CRM: ");
 		JTextField txtcrmMedico = new JTextField(100);
 		JLabel lblbespcialidade = new JLabel("Especialidade: ");
@@ -157,8 +185,11 @@ public class InterfaceConsulta {
 		agendarConsulta.add(txtespecialidade);
 		agendarConsulta.add(lbldiagnostico);
 		agendarConsulta.add(txtdiagnostico);
-		agendarConsulta2.add(botaoAgendarConsulta);
-		agendarConsulta2.add(fecharjanela);
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(new JLabel());
+		agendarConsulta.add(botaoAgendarConsulta);
+		agendarConsulta.add(fecharjanela);
 
 		txtcpfpaciente2.setBorder(null);
 		txtNomePaciente.setBorder(null);
@@ -255,5 +286,11 @@ public class InterfaceConsulta {
 		botaoAgendarConsulta.addActionListener(ActionEvent -> {
 			controllerConsulta.agendarConsulta(txtdiagnostico.getText(), idtempPaciente, idtempHospital, idtempMedico);
 		});
+		
+		fecharjanela.addActionListener(ActionEvent ->{
+			janelaAgendarConsulta.dispose();
+		});
 	}
+	
+	
 }

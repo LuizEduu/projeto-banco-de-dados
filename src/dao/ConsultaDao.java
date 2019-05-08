@@ -29,12 +29,17 @@ public class ConsultaDao {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			preparedStatement.setTimestamp(4, date);
 			preparedStatement.setString(5, consulta.getDiagnostico());
-			preparedStatement.execute();
+			preparedStatement.executeQuery();
 			connection.commit();
 		} catch (Exception e) {
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
+				try {
+					connection.rollback();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
 				e1.printStackTrace();
 			}
 		}
