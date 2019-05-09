@@ -12,9 +12,24 @@ public class ControllerConsulta {
 	public void agendarConsulta() {
 	}
 	
-	public void agendarConsulta(String diagnostico, long id_paciente, long id_hospital, long id_medico) {
-		Consulta consulta = new Consulta(diagnostico, id_paciente, id_hospital, id_medico);
+	public void agendarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital, long id_medico) {
+		String dataconsultatemp = LimpaDados.converterDataConsulta(dataconsulta);
+		Consulta consulta = new Consulta(diagnostico, dataconsultatemp, id_paciente, id_hospital, id_medico);
 		consultaDao.agendarConsulta(consulta);
+	}
+	
+	public void atualizarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital, long id_medico) {
+		String dataconsultatemp = LimpaDados.converterDataConsulta(dataconsulta);
+		Consulta consulta = new Consulta(diagnostico,dataconsultatemp, id_paciente, id_hospital, id_medico);
+		consultaDao.atualizarPaciente(consulta);
+	}
+	
+	public Consulta buscarConsulta(long idconsulta) {
+		Consulta consulta = new Consulta();
+		consulta = consultaDao.buscarConsulta(idconsulta);
+		String datatemp = LimpaDados.converterDataConsultaBusca(consulta.getDataconsulta());
+		consulta.setDataconsulta(datatemp);
+		return consulta;
 	}
 
 	public Paciente buscarDadosPaciente(String cpfPaciente) {

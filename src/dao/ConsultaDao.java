@@ -26,22 +26,69 @@ public class ConsultaDao {
 			preparedStatement.setLong(1, consulta.getId_paciente());
 			preparedStatement.setLong(2, consulta.getId_medico());
 			preparedStatement.setLong(3, consulta.getId_hospital());
-			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-			preparedStatement.setTimestamp(4, date);
+			preparedStatement.setString(4, consulta.getDataconsulta());
 			preparedStatement.setString(5, consulta.getDiagnostico());
-			preparedStatement.executeQuery();
+			preparedStatement.execute();
 			connection.commit();
 		} catch (Exception e) {
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				try {
-					connection.rollback();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
 				e1.printStackTrace();
 			}
+		}
+	}
+
+	public Consulta buscarConsulta(long idconsulta) {
+		Consulta consulta = new Consulta();
+		try {
+			String sql = "SELECT C.IDCONSULTA, P.NOME , P.CPF, TP.NUMEROTELEFONE, P.SEXO,  H.NOME , H.CNPJ, TH.NUMEROTELEFONE, "
+					+ "H.RUA, H.BAIRRO, H.CIDADE, M.NOME ,  M.CPF, M.CRM, M.ESPECIALIDADE, "
+					+ "C.DATA, C.DIAGNOSTICO " 
+					+ "FROM CONSULTA C "
+					+ "INNER JOIN PACIENTE P ON P.IDPACIENTE = C.ID_PACIENTE "
+					+ "INNER JOIN HOSPITAL H ON H.IDHOSPITAL = C.ID_HOSPITAL "
+					+ "INNER JOIN MEDICO M ON M.IDMEDICO = C.ID_MEDICO "
+					+ "INNER JOIN TELEFONEPACIENTE TP ON TP.ID_PACIENTE = P.IDPACIENTE "
+					+ "INNER JOIN TELEFONEHOSPITAL TH ON TH.ID_HOSPITAL = H.IDHOSPITAL " 
+					+ "WHERE C.IDCONSULTA = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1, idconsulta);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				consulta.setIdconsulta(resultSet.getLong("idconsulta"));
+				consulta.getPaciente().setNome(resultSet.getString("nome"));
+				consulta.getPaciente().setCpf(resultSet.getString("cpf"));
+				consulta.getPaciente().getTelefonePaciente().setNumero(resultSet.getString("numerotelefone"));
+				consulta.getPaciente().setSexo(resultSet.getString("sexo"));
+				consulta.getHospita().setNome(resultSet.getString("nome"));
+				consulta.getHospita().setCnpj(resultSet.getString("cnpj"));
+				consulta.getHospita().getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefone"));
+				consulta.getHospita().setRua(resultSet.getString("rua"));
+				consulta.getHospita().setBairro(resultSet.getString("bairro"));
+				consulta.getHospita().setCidade(resultSet.getString("cidade"));
+				consulta.getMedico().setNome(resultSet.getString("nome"));
+				consulta.getMedico().setCrm(resultSet.getString("crm"));
+				consulta.getMedico().setEspecialidade(resultSet.getString("especialidade"));
+				consulta.setDataconsulta(resultSet.getString("data"));
+				consulta.setDiagnostico(resultSet.getString("diagnostico"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return consulta;
+	}
+
+	
+	public void atualizarPaciente(Consulta consulta) {
+		try {
+
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -49,7 +96,7 @@ public class ConsultaDao {
 		Paciente paciente = new Paciente();
 		try {
 			String sql = "select p.idpaciente, p.nome, p.cpf, p.sexo, t.numerotelefone " + "from paciente p "
-					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente " + "where p.cpf = ?";
+					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente " + "where p.cpf = ? ";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, cpfPaciente);

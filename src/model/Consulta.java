@@ -8,12 +8,16 @@ public class Consulta {
 	private long id_paciente;
 	private long id_hospital;
 	private long id_medico;
+	private Paciente paciente = new Paciente();
+	private Hospital hospita = new Hospital();
+	private Medico medico = new Medico();
 
 	public Consulta() {
 	}
 
-	public Consulta(String diagnostico, long id_paciente, long id_medico, long id_hospital) {
+	public Consulta(String diagnostico, String dataconsulta, long id_paciente, long id_medico, long id_hospital) {
 		this.diagnostico = diagnostico;
+		this.dataconsulta = dataconsulta;
 		this.id_paciente = id_paciente;
 		this.id_hospital = id_hospital;
 		this.id_medico = id_medico;
@@ -65,6 +69,30 @@ public class Consulta {
 
 	public void setId_medico(long id_medico) {
 		this.id_medico = id_medico;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public Hospital getHospita() {
+		return hospita;
+	}
+
+	public void setHospita(Hospital hospita) {
+		this.hospita = hospita;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
 	}
 
 }

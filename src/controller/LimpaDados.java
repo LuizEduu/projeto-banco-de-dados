@@ -36,4 +36,30 @@ public class LimpaDados {
 
 		return dataformatada;
 	}
+	
+	public static String converterDataConsulta(String dataconsulta) {
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+		java.util.Date data_desejada = null;
+		try {
+			data_desejada = new SimpleDateFormat("dd/MM/yyyy HH:MM").parse(dataconsulta);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String dataformatada = formato.format(data_desejada);
+		
+		return dataformatada;
+	}
+	
+	public static String converterDataConsultaBusca (String dataconsulta) {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:MM");
+		java.util.Date data_desejada = null;
+		try {
+			data_desejada = new SimpleDateFormat("yyyy-MM-dd HH:MM").parse(dataconsulta);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String dataformatada = formato.format(data_desejada);
+		
+		return dataformatada;
+	}
 }

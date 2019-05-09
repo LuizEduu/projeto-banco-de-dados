@@ -58,12 +58,12 @@ public class InterfacePrincipal {
 		JMenu MenuConsulta = new JMenu("Consulta");
 		jBarraMenu.add(MenuConsulta);
 		JMenuItem Agendar = new JMenuItem("Agendar");
-		JMenuItem Editar = new JMenuItem("Editar");
+		JMenuItem atualizar = new JMenuItem("Atualizar");
 		JMenuItem Cancelar = new JMenuItem("Cancelar");
 		JMenuItem Listar = new JMenuItem("Listar");
 		MenuConsulta.add(Agendar);
 		MenuConsulta.addSeparator();
-		MenuConsulta.add(Editar);
+		MenuConsulta.add(atualizar);
 		MenuConsulta.addSeparator();
 		MenuConsulta.add(Cancelar);
 		MenuConsulta.addSeparator();
@@ -107,6 +107,7 @@ public class InterfacePrincipal {
 		listarHospital(listarHospital);
 
 		agendarConsulta(Agendar);
+		atualizarConsulta(atualizar);
 
 	}
 
@@ -185,6 +186,12 @@ public class InterfacePrincipal {
 	private void agendarConsulta(JMenuItem agendarConsulta) {
 		agendarConsulta.addActionListener(ActionEvent -> {
 			interfaceConsulta.agendarConsulta();
+		});
+	}
+	
+	private void atualizarConsulta(JMenuItem atualizarConsulta) {
+		atualizarConsulta.addActionListener(ActionEvent ->{
+			interfaceConsulta.editarConsulta();
 		});
 	}
 
