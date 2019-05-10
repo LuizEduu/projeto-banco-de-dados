@@ -9,9 +9,6 @@ import model.Paciente;
 public class ControllerConsulta {
 	ConsultaDao consultaDao = new ConsultaDao();
 
-	public void agendarConsulta() {
-	}
-	
 	public void agendarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital, long id_medico) {
 		String dataconsultatemp = LimpaDados.converterDataConsulta(dataconsulta);
 		Consulta consulta = new Consulta(diagnostico, dataconsultatemp, id_paciente, id_hospital, id_medico);

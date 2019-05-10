@@ -38,10 +38,10 @@ public class LimpaDados {
 	}
 	
 	public static String converterDataConsulta(String dataconsulta) {
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		java.util.Date data_desejada = null;
 		try {
-			data_desejada = new SimpleDateFormat("dd/MM/yyyy HH:MM").parse(dataconsulta);
+			data_desejada = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dataconsulta);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -51,10 +51,10 @@ public class LimpaDados {
 	}
 	
 	public static String converterDataConsultaBusca (String dataconsulta) {
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:MM");
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		java.util.Date data_desejada = null;
 		try {
-			data_desejada = new SimpleDateFormat("yyyy-MM-dd HH:MM").parse(dataconsulta);
+			data_desejada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dataconsulta);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

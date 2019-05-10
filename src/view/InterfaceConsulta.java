@@ -38,20 +38,19 @@ public class InterfaceConsulta {
 		MaskFormatter maskcpfpaciente = null;
 		try {
 			maskcpfpaciente = new MaskFormatter("### . ### . ### - ##");
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		MaskFormatter maskcpfpaciente2 = null;
 		try {
 			maskcpfpaciente2 = new MaskFormatter("### . ### . ### - ##");
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		JLabel lblcpfPaciente = new JLabel("Cpf Paciente: ");
 		JFormattedTextField txtcpfPaciente = new JFormattedTextField(maskcpfpaciente);
 		JButton botaoBuscarPaciente = new JButton("Buscar Paciente");
@@ -138,12 +137,12 @@ public class InterfaceConsulta {
 		JLabel lbldataconsulta = new JLabel("Data da Consulta: ");
 		MaskFormatter maskDataConsulta = null;
 		try {
-			maskDataConsulta = new MaskFormatter("##/## - ##:##");
-		}catch (Exception e) {
+			maskDataConsulta = new MaskFormatter("##/##/#### ##:##");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JFormattedTextField txtdataconsulta = new JFormattedTextField(maskDataConsulta);
-		JButton botaoAgendarConsulta = new JButton("Agendar Consulta");
+		JButton btnagendarConsulta = new JButton("Agendar Consulta");
 		JButton fecharjanela = new JButton("Fechar Janela");
 
 		editarConsulta.add(lblcpfPaciente);
@@ -203,7 +202,7 @@ public class InterfaceConsulta {
 		editarConsulta.add(lbldataconsulta);
 		editarConsulta.add(txtdataconsulta);
 		editarConsulta.add(new JLabel());
-		editarConsulta.add(botaoAgendarConsulta);
+		editarConsulta.add(btnagendarConsulta);
 		editarConsulta.add(fecharjanela);
 
 		txtcpfpaciente2.setBorder(null);
@@ -297,15 +296,16 @@ public class InterfaceConsulta {
 			idtempMedico = medico.getId();
 		});
 
-		botaoAgendarConsulta.addActionListener(ActionEvent-> {
-			controllerConsulta.agendarConsulta(txtdiagnostico.getText(), txtdataconsulta.getText(), idtempPaciente, idtempMedico, idtempHospital);
+		btnagendarConsulta.addActionListener(ActionEvent -> {
+			controllerConsulta.agendarConsulta(txtdiagnostico.getText(), txtdataconsulta.getText(), idtempPaciente,
+					idtempMedico, idtempHospital);
 		});
 
 		fecharjanela.addActionListener(ActionEvent -> {
 			janelaEditarConsulta.dispose();
 		});
 	}
-	
+
 	public void editarConsulta() {
 		JPanel atualizarConsulta = new JPanel();
 		atualizarConsulta.setLayout(new GridLayout(13, 4, 2, 1));
@@ -341,7 +341,6 @@ public class InterfaceConsulta {
 		JLabel lblsexo = new JLabel("Sexo: ");
 		JTextField txtsexo = new JTextField(10);
 
-
 		MaskFormatter maskcnpj2 = null;
 		try {
 			maskcnpj2 = new MaskFormatter("##.###.###/####-##");
@@ -355,7 +354,7 @@ public class InterfaceConsulta {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		JLabel lblNomeHospital = new JLabel("Hospital: ");
 		JTextField txtNomeHospital = new JTextField(100);
 		JLabel lblcpnjhospital2 = new JLabel("CNPJ Hospital: ");
@@ -390,8 +389,8 @@ public class InterfaceConsulta {
 		JLabel lbldataconsulta = new JLabel("Data da Consulta: ");
 		MaskFormatter maskDataConsulta = null;
 		try {
-			maskDataConsulta = new MaskFormatter("##/## - ##:##");
-		}catch (Exception e) {
+			maskDataConsulta = new MaskFormatter("## / ## / #### - ## : ##");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JFormattedTextField txtdataconsulta = new JFormattedTextField(maskDataConsulta);
@@ -517,12 +516,24 @@ public class InterfaceConsulta {
 			txtcpfpaciente2.setText(consulta.getPaciente().getCpf());
 			txtTelefonePaciente.setText(consulta.getPaciente().getTelefonePaciente().getNumero());
 			txtsexo.setText(consulta.getPaciente().getSexo());
+			txtNomeHospital.setText(consulta.getHospital().getNome());
+			txtcpnj.setText(consulta.getHospital().getCnpj());
+			txtTelefoneHospital.setText(consulta.getHospital().getTelefoneHospital().getNumerotelefone());
+			txtrua.setText(consulta.getHospital().getRua());
+			txtbairro.setText(consulta.getHospital().getBairro());
+			txtcidade.setText(consulta.getHospital().getCidade());
+			txtNomeMedico.setText(consulta.getMedico().getNome());
+			txtcpfmedico2.setText(consulta.getMedico().getCpf());
+			txtcrmMedico.setText(consulta.getMedico().getCrm());
+			txtespecialidade.setText(consulta.getMedico().getEspecialidade());
+			txtdiagnostico.setText(consulta.getDiagnostico());
+			txtdataconsulta.setText(consulta.getDataconsulta());
 
 		});
 
-
-		botaoAtualizarConsulta.addActionListener(ActionEvent-> {
-			controllerConsulta.atualizarConsulta(txtdiagnostico.getText(), txtdataconsulta.getText(), idtempPaciente, idtempMedico, idtempHospital);
+		botaoAtualizarConsulta.addActionListener(ActionEvent -> {
+			controllerConsulta.atualizarConsulta(txtdiagnostico.getText(), txtdataconsulta.getText(), idtempPaciente,
+					idtempMedico, idtempHospital);
 		});
 
 		fecharjanela.addActionListener(ActionEvent -> {

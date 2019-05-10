@@ -9,7 +9,7 @@ public class Consulta {
 	private long id_hospital;
 	private long id_medico;
 	private Paciente paciente = new Paciente();
-	private Hospital hospita = new Hospital();
+	private Hospital hospital = new Hospital();
 	private Medico medico = new Medico();
 
 	public Consulta() {
@@ -79,12 +79,12 @@ public class Consulta {
 		this.paciente = paciente;
 	}
 
-	public Hospital getHospita() {
-		return hospita;
+	public Hospital getHospital() {
+		return hospital;
 	}
 
 	public void setHospita(Hospital hospita) {
-		this.hospita = hospita;
+		this.hospital = hospita;
 	}
 
 	public Medico getMedico() {
