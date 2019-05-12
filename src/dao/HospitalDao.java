@@ -22,7 +22,8 @@ public class HospitalDao {
 	public void Salvar(Hospital hospital, TelefoneHospital telefoneHospital) {
 
 		try {
-			String sql = "insert into hospital (nome, cnpj, rua, bairro, cidade) values (?, ?, ?, ?, ?)";
+			String sql = "insert into hospital (nomehospital, cnpjhospital, ruahospital, bairrohospital, cidadehospital) "
+					   + "values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, hospital.getNome());
 			preparedStatement.setString(2, hospital.getCnpj());
@@ -37,7 +38,7 @@ public class HospitalDao {
 				lastId = rs.getInt(1);
 			}
 
-			String sql2 = "insert into telefonehospital (numerotelefone, id_hospital) values (?,?)";
+			String sql2 = "insert into telefonehospital (numerotelefonehospital, id_hospital) values (?,?)";
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			preparedStatement2.setString(1, telefoneHospital.getNumerotelefone());
 			preparedStatement2.setInt(2, lastId);
@@ -58,7 +59,9 @@ public class HospitalDao {
 	public Hospital buscar(Long id) {
 		Hospital hospital = new Hospital();
 		try {
-			String sql = "select h.nome, h.cnpj, t.numerotelefone, h.rua, h.bairro, h.cidade " + "from hospital h "
+			String sql = "select h.nomehospital, h.cnpjhospital, t.numerotelefonehospital, h.ruahospital, h.bairrohospital, "
+					+ "h.cidadehospital " 
+					+ "from hospital h "
 					+ "inner join telefonehospital t ON t.id_hospital = h.idhospital " + "where h.idhospital = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -66,12 +69,12 @@ public class HospitalDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				hospital.setNome(resultSet.getString("nome"));
-				hospital.setCnpj(resultSet.getString("cnpj"));
-				hospital.getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefone"));
-				hospital.setRua(resultSet.getString("rua"));
-				hospital.setBairro(resultSet.getString("bairro"));
-				hospital.setCidade(resultSet.getString("cidade"));
+				hospital.setNome(resultSet.getString("nomehospital"));
+				hospital.setCnpj(resultSet.getString("cnpjhospital"));
+				hospital.getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefonehospital"));
+				hospital.setRua(resultSet.getString("ruahospital"));
+				hospital.setBairro(resultSet.getString("bairrohospital"));
+				hospital.setCidade(resultSet.getString("cidadehospital"));
 			}
 		} catch (SQLException e) {
 			try {
@@ -86,8 +89,10 @@ public class HospitalDao {
 
 	public void atualizarHospital(Long id, Hospital hospital, TelefoneHospital telefoneHospital) {
 		try {
-			String sql = "update hospital set nome= ?,  cnpj= ?,  rua= ?,  bairro= ?,  cidade= ? where idhospital= ?";
-			String sql2 = "update telefonehospital set numerotelefone= ? where id_hospital= ?";
+			String sql = "update hospital set nomehospital= ?,  cnpjhospital= ?,  ruahospital= ?,  bairrohospital= ?, "
+					   + "cidadehospital= ? "
+					   + "where idhospital= ?";
+			String sql2 = "update telefonehospital set numerotelefonehospital= ? where id_hospital= ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
@@ -140,7 +145,8 @@ public class HospitalDao {
 	public ArrayList<Hospital> Listar() {
 		ArrayList<Hospital> list = new ArrayList<Hospital>();
 		try {
-			String sql = "select h. idhospital, h.nome, h.cnpj, t.numerotelefone, h.bairro, h.cidade "
+			String sql = "select h. idhospital, h.nomehospital, h.cnpjhospital, t.numerotelefonehospital, h.bairrohospital, "
+					+ "h.cidadehospital "
 					+ "from hospital h " + "inner join telefonehospital t ON t.id_hospital = h.idhospital";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -149,11 +155,11 @@ public class HospitalDao {
 			while (resultSet.next()) {
 				Hospital hospital = new Hospital();
 				hospital.setIdhospital(resultSet.getLong("idhospital"));
-				hospital.setNome(resultSet.getString("nome"));
-				hospital.setCnpj(resultSet.getString("cnpj"));
-				hospital.setBairro(resultSet.getString("bairro"));
-				hospital.setCidade(resultSet.getString("cidade"));
-				hospital.getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefone"));
+				hospital.setNome(resultSet.getString("nomehospital"));
+				hospital.setCnpj(resultSet.getString("cnpjhospital"));
+				hospital.setBairro(resultSet.getString("bairrohospital"));
+				hospital.setCidade(resultSet.getString("cidadehospital"));
+				hospital.getTelefoneHospital().setNumerotelefone(resultSet.getString("numerotelefonehospital"));
 				list.add(hospital);
 			}
 

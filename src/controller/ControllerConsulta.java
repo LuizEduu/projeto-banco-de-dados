@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import dao.ConsultaDao;
 import model.Consulta;
 import model.Hospital;
@@ -9,18 +11,24 @@ import model.Paciente;
 public class ControllerConsulta {
 	ConsultaDao consultaDao = new ConsultaDao();
 
-	public void agendarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital, long id_medico) {
+	public void agendarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital,
+			long id_medico) {
 		String dataconsultatemp = LimpaDados.converterDataConsulta(dataconsulta);
 		Consulta consulta = new Consulta(diagnostico, dataconsultatemp, id_paciente, id_hospital, id_medico);
 		consultaDao.agendarConsulta(consulta);
 	}
-	
-	public void atualizarConsulta(String diagnostico, String dataconsulta, long id_paciente, long id_hospital, long id_medico) {
+
+	public void atualizarConsulta(long id, String diagnostico, String dataconsulta, long id_paciente, long id_hospital,
+			long id_medico) {
 		String dataconsultatemp = LimpaDados.converterDataConsulta(dataconsulta);
-		Consulta consulta = new Consulta(diagnostico,dataconsultatemp, id_paciente, id_hospital, id_medico);
-		consultaDao.atualizarPaciente(consulta);
+		Consulta consulta = new Consulta(diagnostico, dataconsultatemp, id_paciente, id_hospital, id_medico);
+		consultaDao.atualizarConsulta(id, consulta);
 	}
-	
+
+	public void cancelarConsulta(long id) {
+		consultaDao.cancelarConsulta(id);
+	}
+
 	public Consulta buscarConsulta(long idconsulta) {
 		Consulta consulta = new Consulta();
 		consulta = consultaDao.buscarConsulta(idconsulta);
@@ -48,5 +56,11 @@ public class ControllerConsulta {
 		String cpftemp = LimpaDados.limpaAll(cpf);
 		medico = consultaDao.BuscarDadosMedico(cpftemp);
 		return medico;
+	}
+	
+	public ArrayList<Consulta> relatorioConsultas() {
+		ArrayList<Consulta> arrayList = new ArrayList<Consulta>();
+		arrayList = consultaDao.relatoriosConsulta();
+		return arrayList;
 	}
 }

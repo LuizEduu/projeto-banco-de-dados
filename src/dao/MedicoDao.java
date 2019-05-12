@@ -23,7 +23,8 @@ public class MedicoDao {
 	public void Salvar(Medico medico, TelefoneMedico telefoneMedico, EnderecoMedico enderecoMedico) {
 		try {
 
-			String sql = "insert into medico (nome, cpf, sexo, especialidade, crm) values (?, ?, ?, ?, ?)";
+			String sql = "insert into medico (nomemedico, cpfmedico, sexomedico, especialidademedico, crmmedico) values "
+					   + "(?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, medico.getNome());
 			preparedStatement.setString(2, medico.getCpf());
@@ -38,12 +39,13 @@ public class MedicoDao {
 				lastId = rs.getInt(1);
 			}
 
-			String sql2 = "insert into telefonemedico (numerotelefone, id_medico) values (?,?)";
+			String sql2 = "insert into telefonemedico (numerotelefonemedico, id_medico) values (?,?)";
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			preparedStatement2.setString(1, telefoneMedico.getNumero());
 			preparedStatement2.setInt(2, lastId);
 
-			String sql3 = "insert into enderecomedico (rua, numero, bairro, cidade, id_medico) values(?, ?, ?, ?, ?)";
+			String sql3 = "insert into enderecomedico (ruamedico, numeromedico, bairromedico, cidademedico, id_medico) "
+					    + "values(?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement3 = connection.prepareStatement(sql3);
 			preparedStatement3.setString(1, enderecoMedico.getRua());
 			preparedStatement3.setString(2, enderecoMedico.getNumero());
@@ -70,8 +72,8 @@ public class MedicoDao {
 	public Medico buscar(Long id) {
 		Medico medico = new Medico();
 		try {
-			String sql = "select m.nome, m.cpf, m.sexo, m.especialidade, m.crm, t.numerotelefone, e.rua, e.numero, "
-					+ "e.bairro, e.cidade "
+			String sql = "select m.nomemedico, m.cpfmedico, m.sexomedico, m.especialidademedico, m.crmmedico, "
+					+ "t.numerotelefonemedico, e.ruamedico, e.numeromedico, e.bairromedico, e.cidademedico "
 					+ "from medico m "
 					+ "inner join telefonemedico t ON t.id_medico = m.idmedico "
 					+ "inner join enderecomedico e ON e.id_medico = m.idmedico "
@@ -82,25 +84,19 @@ public class MedicoDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				medico.setNome(resultSet.getString("nome"));
-				medico.setCpf(resultSet.getString("cpf"));
-				medico.setSexo(resultSet.getString("sexo"));
-				medico.setEspecialidade(resultSet.getString("especialidade"));
-				medico.setCrm(resultSet.getString("crm"));
-				medico.getTelefoneMedico().setNumero(resultSet.getString("numerotelefone"));
-				medico.getEnderecoMedico().setRua(resultSet.getString("rua"));
-				medico.getEnderecoMedico().setNumero(resultSet.getString("numero"));
-				medico.getEnderecoMedico().setBairro(resultSet.getString("bairro"));
-				medico.getEnderecoMedico().setCidade(resultSet.getString("cidade"));
+				medico.setNome(resultSet.getString("nomemedico"));
+				medico.setCpf(resultSet.getString("cpfmedico"));
+				medico.setSexo(resultSet.getString("sexomedico"));
+				medico.setEspecialidade(resultSet.getString("especialidademedico"));
+				medico.setCrm(resultSet.getString("crmmedico"));
+				medico.getTelefoneMedico().setNumero(resultSet.getString("numerotelefonemedico"));
+				medico.getEnderecoMedico().setRua(resultSet.getString("ruamedico"));
+				medico.getEnderecoMedico().setNumero(resultSet.getString("numeromedico"));
+				medico.getEnderecoMedico().setBairro(resultSet.getString("bairromedico"));
+				medico.getEnderecoMedico().setCidade(resultSet.getString("cidademedico"));
 			}
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
-
 		}
 		return medico;
 
@@ -108,9 +104,11 @@ public class MedicoDao {
 
 	public void atualizarMedico(Long id, Medico medico, TelefoneMedico telefoneMedico, EnderecoMedico enderecoMedico) {
 		try {
-			String sql = "update medico set nome= ?, set cpf= ?, sexo= ?, especialidade= ?, crm= ?, where idmedico= ?";
-			String sql2 = "update telefonemedico set numerotelefone= ? where id_medico= ?";
-			String sql3 = "update enderecomedico set rua= ?, numero= ?, bairro= ?, cidade= ? where id_medico= ?";
+			String sql = "update medico set nomemedico= ?, cpfmedico= ?, sexomedico= ?, especialidademedico= ?, crmmedico= ? "
+					   + "where idmedico = ?";
+			String sql2 = "update telefonemedico set numerotelefonemedico= ? where id_medico= ?";
+			String sql3 = "update enderecomedico set ruamedico= ?, numeromedico= ?, bairromedico= ?, cidademedico= ? "
+					    + "where id_medico= ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			PreparedStatement preparedStatement3 = connection.prepareStatement(sql3);
@@ -175,8 +173,9 @@ public class MedicoDao {
 	public ArrayList<Medico> Listar() {
 		ArrayList<Medico> list = new ArrayList<Medico>();
 		try {
-			String sql = "select m.idmedico, m.nome, m.cpf, m.sexo, m.especialidade, m.crm, t.numerotelefone, e.rua, e.numero, "
-					+ "e.bairro, e.cidade from medico m "
+			String sql = "select m.idmedico, m.nomemedico, m.cpfmedico, m.sexomedico, m.especialidademedico, m.crmmedico, "
+					+ "t.numerotelefonemedico, e.ruamedico, e.numeromedico, e.bairromedico, e.cidademedico "
+					+ "from medico m "
 					+ "inner join telefonemedico t ON t.id_medico = m.idmedico "
 					+ "inner join enderecomedico e ON e.id_medico = m.idmedico";
 
@@ -186,16 +185,16 @@ public class MedicoDao {
 			while (resultSet.next()) {
 				Medico medico = new Medico();
 				medico.setId(resultSet.getLong("idmedico"));
-				medico.setNome(resultSet.getString("nome"));
-				medico.setCpf(resultSet.getString("cpf"));
-				medico.setSexo(resultSet.getString("sexo"));
-				medico.setEspecialidade(resultSet.getString("especialidade"));
-				medico.setCrm(resultSet.getString("crm"));
-				medico.getTelefoneMedico().setNumero(resultSet.getString("numerotelefone"));
-				medico.getEnderecoMedico().setRua(resultSet.getString("rua"));
-				medico.getEnderecoMedico().setNumero(resultSet.getString("numero"));
-				medico.getEnderecoMedico().setBairro(resultSet.getString("bairro"));
-				medico.getEnderecoMedico().setCidade(resultSet.getString("cidade"));
+				medico.setNome(resultSet.getString("nomemedico"));
+				medico.setCpf(resultSet.getString("cpfmedico"));
+				medico.setSexo(resultSet.getString("sexomedico"));
+				medico.setEspecialidade(resultSet.getString("especialidademedico"));
+				medico.setCrm(resultSet.getString("crmmedico"));
+				medico.getTelefoneMedico().setNumero(resultSet.getString("numerotelefonemedico"));
+				medico.getEnderecoMedico().setRua(resultSet.getString("ruamedico"));
+				medico.getEnderecoMedico().setNumero(resultSet.getString("numeromedico"));
+				medico.getEnderecoMedico().setBairro(resultSet.getString("bairromedico"));
+				medico.getEnderecoMedico().setCidade(resultSet.getString("cidademedico"));
 				list.add(medico);
 			}
 

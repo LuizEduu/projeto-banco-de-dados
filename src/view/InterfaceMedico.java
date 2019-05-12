@@ -223,6 +223,17 @@ public class InterfaceMedico {
 					(String) ComboSexo.getSelectedItem(), txtespecialidade.getText(), txtcrm.getText(),
 					txttelefone.getText(), txtrua.getText(), txtnumero.getText(), txtbairro.getText(),
 					txtcidade.getText());
+			
+			txtNome.setText(null);
+			txtcpf.setText(null);
+			ComboSexo.setSelectedItem(null);
+			txtespecialidade.setText(null);
+			txtcrm.setText(null);
+			txttelefone.setText(null);
+			txtrua.setText(null);
+			txtnumero.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
@@ -369,6 +380,17 @@ public class InterfaceMedico {
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
 			controllerMedico.removerMedico(idtemp);
+			
+			txtNome.setText(null);
+			txtcpf.setText(null);
+			txtsexo.setText(null);
+			txtespecialidade.setText(null);
+			txtcrm.setText(null);
+			txttelefone.setText(null);
+			txtrua.setText(null);
+			txtnumero.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {

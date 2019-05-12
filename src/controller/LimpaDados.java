@@ -50,11 +50,11 @@ public class LimpaDados {
 		return dataformatada;
 	}
 	
-	public static String converterDataConsultaBusca (String dataconsulta) {
+	public static String converterDataConsultaBusca(String dataconsulta) {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		java.util.Date data_desejada = null;
 		try {
-			data_desejada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dataconsulta);
+			data_desejada = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dataconsulta);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

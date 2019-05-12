@@ -285,6 +285,12 @@ public class InterfaceHospital {
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
 			controllerHospital.removerHospital(idtemp);
+			txtNome.setText(null);
+			txtcnpj.setText(null);
+			txttelefone.setText(null);
+			txtrua.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {

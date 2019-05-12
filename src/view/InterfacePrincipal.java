@@ -108,6 +108,8 @@ public class InterfacePrincipal {
 
 		agendarConsulta(Agendar);
 		atualizarConsulta(atualizar);
+		cancelarConsulta(Cancelar);
+		relatorioConsultas(Listar);
 
 	}
 
@@ -192,6 +194,18 @@ public class InterfacePrincipal {
 	private void atualizarConsulta(JMenuItem atualizarConsulta) {
 		atualizarConsulta.addActionListener(ActionEvent ->{
 			interfaceConsulta.editarConsulta();
+		});
+	}
+	
+	private void cancelarConsulta(JMenuItem cancelarConsulta) {
+		cancelarConsulta.addActionListener(ActionEvent ->{
+			interfaceConsulta.cancelarConsulta();
+		});
+	}
+	
+	private void relatorioConsultas(JMenuItem relatorioConsulta) {
+		relatorioConsulta.addActionListener(ActionEvent ->{
+			interfaceConsulta.relatorioConsulta();
 		});
 	}
 

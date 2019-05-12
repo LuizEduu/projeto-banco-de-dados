@@ -23,7 +23,7 @@ public class PacienteDao {
 	public void Salvar(Paciente paciente, TelefonePaciente telefonePaciente, EnderecoPaciente enderecoPaciente) {
 		try {
 
-			String sql = "insert into paciente (nome, cpf, sexo, email, nascimento) values (?, ?, ?, ?, ?)";
+			String sql = "insert into paciente (nomepaciente, cpfpaciente, sexopaciente, email, datanascimento) values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, paciente.getNome());
 			preparedStatement.setString(2, paciente.getCpf());
@@ -38,12 +38,12 @@ public class PacienteDao {
 				lastId = rs.getInt(1);
 			}
 
-			String sql2 = "insert into telefonepaciente (numerotelefone, id_paciente) values (?,?)";
+			String sql2 = "insert into telefonepaciente (numerotelefonepaciente, id_paciente) values (?, ?)";
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			preparedStatement2.setString(1, telefonePaciente.getNumero());
 			preparedStatement2.setInt(2, lastId);
 
-			String sql3 = "insert into enderecopaciente (rua, numero, bairro, cidade, id_paciente) values(?, ?, ?, ?, ?)";
+			String sql3 = "insert into enderecopaciente (ruapaciente, numeropaciente, bairropaciente, cidadepaciente, id_paciente) values(?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement3 = connection.prepareStatement(sql3);
 			preparedStatement3.setString(1, enderecoPaciente.getRua());
 			preparedStatement3.setString(2, enderecoPaciente.getNumero());
@@ -52,20 +52,23 @@ public class PacienteDao {
 			preparedStatement3.setInt(5, lastId);
 			preparedStatement2.execute();
 			preparedStatement3.execute();
-
 			connection.commit();
-
 		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
-
 	}
 
 	public Paciente buscar(Long id) {
 		Paciente paciente = new Paciente();
 		try {
-			String sql = "select p.nome, p.cpf, p.sexo, p.email, t.numerotelefone, e.rua, e.numero, e.bairro,"
-					+ " e.cidade, p.nascimento " + "from paciente p "
+			String sql = "select p.nomepaciente, p.cpfpaciente, p.sexopaciente, p.email, t.numerotelefonepaciente, e.ruapaciente, "
+					+ "e.numeropaciente, e.bairropaciente, "
+					+ "e.cidadepaciente, p.datanascimento " + "from paciente p "
 					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
 					+ "inner join enderecopaciente e ON e.id_paciente = p.idpaciente "
 					+ "where p.idpaciente = ?";
@@ -75,25 +78,19 @@ public class PacienteDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				paciente.setNome(resultSet.getString("nome"));
-				paciente.setCpf(resultSet.getString("cpf"));
-				paciente.setSexo(resultSet.getString("sexo"));
+				paciente.setNome(resultSet.getString("nomepaciente"));
+				paciente.setCpf(resultSet.getString("cpfpaciente"));
+				paciente.setSexo(resultSet.getString("sexopaciente"));
 				paciente.setEmail(resultSet.getString("email"));
-				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefone"));
-				paciente.getEnderecoPaciente().setRua(resultSet.getString("rua"));
-				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numero"));
-				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairro"));
-				paciente.getEnderecoPaciente().setCidade(resultSet.getString("cidade"));
-				paciente.setNascimento(resultSet.getString("nascimento"));
+				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefonepaciente"));
+				paciente.getEnderecoPaciente().setRua(resultSet.getString("ruapaciente"));
+				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numeropaciente"));
+				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairropaciente"));
+				paciente.getEnderecoPaciente().setCidade(resultSet.getString("cidadepaciente"));
+				paciente.setNascimento(resultSet.getString("datanascimento"));
 			}
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
-
 		}
 
 		return paciente;
@@ -102,9 +99,12 @@ public class PacienteDao {
 	public void atualizarpaciente(Long id, Paciente paciente, TelefonePaciente telefonePaciente,
 			EnderecoPaciente enderecoPaciente) {
 		try {
-			String sql = "update paciente set nome= ?, cpf= ?, sexo= ?, email= ?, nascimento= ? where idpaciente= ?";
-			String sql2 = "update telefonepaciente set numerotelefone= ? where id_paciente= ?";
-			String sql3 = "update enderecopaciente set rua= ?, numero= ?, bairro= ?, cidade= ? where id_paciente= ?";
+			String sql = "update paciente set nomepaciente= ?, cpfpaciente= ?, sexopaciente= ?, email= ?, datanascimento= ? "
+					   + "where idpaciente= ? ";
+			String sql2 = "update telefonepaciente set numerotelefonepaciente= ? "
+						+ "where id_paciente= ?";
+			String sql3 = "update enderecopaciente set ruapaciente= ?, numeropaciente= ?, bairropaciente= ?, cidadepaciente= ? "
+					    + "where id_paciente= ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
 			PreparedStatement preparedStatement3 = connection.prepareStatement(sql3);
@@ -139,11 +139,6 @@ public class PacienteDao {
 			e.printStackTrace();
 		}
 
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void removerpaciente(int id) {
@@ -174,8 +169,10 @@ public class PacienteDao {
 	public ArrayList<Paciente> Listar() {
 		ArrayList<Paciente> list = new ArrayList<Paciente>();
 		try {
-			String sql = "select p.idpaciente, p.nome, p.cpf, p.sexo, p.email, t.numerotelefone, e.rua, e.numero,"
-					+ " e.bairro, e.cidade, p.nascimento from paciente p "
+			String sql = "select p.idpaciente, p.nomepaciente, p.cpfpaciente, p.sexopaciente, p.email, "
+					+ "t.numerotelefonepaciente , e.ruapaciente , e.numeropaciente , "
+					+ "e.bairropaciente, e.cidadepaciente, p.datanascimento "
+					+ "from paciente p "
 					+ "inner join telefonepaciente t ON t.id_paciente = p.idpaciente "
 					+ "inner join enderecopaciente e ON e.id_paciente = p.idpaciente";
 
@@ -185,16 +182,16 @@ public class PacienteDao {
 			while (resultSet.next()) {
 				Paciente paciente = new Paciente();
 				paciente.setId(resultSet.getLong("idpaciente"));
-				paciente.setNome(resultSet.getString("nome"));
-				paciente.setCpf(resultSet.getString("cpf"));
-				paciente.setSexo(resultSet.getString("sexo"));
+				paciente.setNome(resultSet.getString("nomepaciente"));
+				paciente.setCpf(resultSet.getString("cpfpaciente"));
+				paciente.setSexo(resultSet.getString("sexopaciente"));
 				paciente.setEmail(resultSet.getString("email"));
-				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefone"));
-				paciente.getEnderecoPaciente().setRua(resultSet.getString("rua"));
-				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numero"));
-				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairro"));
-				paciente.getEnderecoPaciente().setCidade(resultSet.getString("cidade"));
-				paciente.setNascimento(resultSet.getString("nascimento"));
+				paciente.getTelefonePaciente().setNumero(resultSet.getString("numerotelefonepaciente"));
+				paciente.getEnderecoPaciente().setRua(resultSet.getString("ruapaciente"));
+				paciente.getEnderecoPaciente().setNumero(resultSet.getString("numeropaciente"));
+				paciente.getEnderecoPaciente().setBairro(resultSet.getString("bairropaciente"));
+				paciente.getEnderecoPaciente().setCidade(resultSet.getString("cidadepaciente"));
+				paciente.setNascimento(resultSet.getString("datanascimento"));
 				list.add(paciente);
 			}
 
