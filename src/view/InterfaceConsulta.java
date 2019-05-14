@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -273,16 +274,22 @@ public class InterfaceConsulta {
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
 
 		botaoBuscarPaciente.addActionListener(ActionListener -> {
+			try {
 			paciente = controllerConsulta.buscarDadosPaciente(txtcpfPaciente.getText());
 			txtNomePaciente.setText(paciente.getNome());
 			txtcpfpaciente2.setText(paciente.getCpf());
 			txtTelefonePaciente.setText(paciente.getTelefonePaciente().getNumero());
 			txtsexo.setText(paciente.getSexo());
 			idtempPaciente = paciente.getId();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaoBuscarPaciente, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		botaoBuscarHospital.addActionListener(ActionEvent -> {
+			try {
 			hospital = controllerConsulta.buscarDadosHospital(txtcpnjHospital.getText());
 			txtNomeHospital.setText(hospital.getNome());
 			txtcpnj.setText(hospital.getCnpj());
@@ -291,21 +298,55 @@ public class InterfaceConsulta {
 			txtbairro.setText(hospital.getBairro());
 			txtcidade.setText(hospital.getCidade());
 			idtempHospital = hospital.getIdhospital();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaoBuscarHospital, "Hospital não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		botaobuscarMedico.addActionListener(ActionEvent -> {
+			try {
 			medico = controllerConsulta.buscarDadosMedico(txtcpfmedico.getText());
 			txtNomeMedico.setText(medico.getNome());
 			txtcpfmedico2.setText(medico.getCpf());
 			txtcrmMedico.setText(medico.getCrm());
 			txtespecialidade.setText(medico.getEspecialidade());
 			idtempMedico = medico.getId();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscarMedico, "Medico não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		btnagendarConsulta.addActionListener(ActionEvent -> {
 			controllerConsulta.agendarConsulta(txtdiagnostico.getText(), txtdataconsulta.getText(), idtempPaciente,
 					idtempMedico, idtempHospital);
+			JOptionPane.showMessageDialog(null, "Consulta Agendada com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			
+			txtcpfPaciente.setText(null);
+			txtcpfpaciente2.setText(null);
+			txtNomePaciente.setText(null);
+			txtTelefonePaciente.setText(null);
+			txtsexo.setText(null);
+			txtNomeHospital.setText(null);
+			txtTelefoneHospital.setText(null);
+			txtcpnjHospital.setText(null);
+			txtcpnj.setText(null);
+			txtTelefoneHospital.setText(null);
+			txtrua.setText(null);
+			txtnumero.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
+			txtNomeMedico.setText(null);
+			txtcpfmedico.setText(null);
+			txtcpfmedico2.setText(null);
+			txtcrmMedico.setText(null);
+			txtespecialidade.setText(null);
+			txtrua.setText(null);
+			txtbairro.setText(null);
+			txtcidade.setText(null);
+			
 		});
 
 		fecharjanela.addActionListener(ActionEvent -> {
@@ -550,6 +591,7 @@ public class InterfaceConsulta {
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
 
 		botaoBuscarConsulta.addActionListener(ActionListener -> {
+			try {
 			long idtemp = Long.parseLong(txtidconsulta.getText());
 			consulta = controllerConsulta.buscarConsulta(idtemp);
 			txtNomePaciente.setText(consulta.getPaciente().getNome());
@@ -571,10 +613,15 @@ public class InterfaceConsulta {
 			txtespecialidade.setText(consulta.getMedico().getEspecialidade());
 			txtdiagnostico.setText(consulta.getDiagnostico());
 			txtdataconsulta.setText(consulta.getDataconsulta());
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaoBuscarConsulta, "Consulta não encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		botaoBuscarPaciente.addActionListener(ActionEvent -> {
+			try {
 			Paciente paciente = new Paciente();
 			paciente = controllerConsulta.buscarDadosPaciente(txtcpfpaciente2.getText());
 			txtNomePaciente.setText(paciente.getNome());
@@ -582,9 +629,14 @@ public class InterfaceConsulta {
 			txtTelefonePaciente.setText(paciente.getTelefonePaciente().getNumero());
 			txtsexo.setText(paciente.getSexo());
 			idtempPaciente = paciente.getId();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaoBuscarPaciente, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		btnBuscarHospital.addActionListener(ActionEvent -> {
+			try {
 			Hospital hospital = new Hospital();
 			hospital = controllerConsulta.buscarDadosHospital(txtCnpj2.getText());
 			txtNomeHospital.setText(hospital.getNome());
@@ -594,9 +646,14 @@ public class InterfaceConsulta {
 			txtbairro.setText(hospital.getBairro());
 			txtcidade.setText(hospital.getCidade());
 			idtempHospital = hospital.getIdhospital();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(btnBuscarHospital, "Hospital não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		btnBuscarMedico.addActionListener(ActionEvent -> {
+			try {
 			Medico medico = new Medico();
 			medico = controllerConsulta.buscarDadosMedico(txtCpfMedico2.getText());
 			txtcpfmedico.setText(medico.getCpf());
@@ -604,6 +661,10 @@ public class InterfaceConsulta {
 			txtcrmMedico.setText(medico.getNome());
 			txtespecialidade.setText(medico.getEspecialidade());
 			idtempMedico = medico.getId();
+			
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(btnBuscarMedico, "Medico não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		botaoAtualizarConsulta.addActionListener(ActionEvent -> {

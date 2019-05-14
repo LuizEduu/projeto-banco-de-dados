@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -81,6 +82,8 @@ public class InterfaceHospital {
 		btnCadastrar.addActionListener((ActionEvent) -> {
 			controllerHospital.cadastrarHospital(txtNome.getText(), txtcnpj.getText(), txttelefone.getText(),
 					txtrua.getText(), txtbairro.getText(), txtcidade.getText());
+			JOptionPane.showMessageDialog(null, "Hospital Cadastrado com Sucesso", "Sucesso",
+					JOptionPane.INFORMATION_MESSAGE);
 
 			txtNome.setText(null);
 			txtcnpj.setText(null);
@@ -156,30 +159,49 @@ public class InterfaceHospital {
 		editarHospital.add(txtcidade);
 		editarHospital.add(editar);
 		editarHospital.add(fecharRemocao);
+		editar.setEnabled(false);
 
 		botaobuscar.addActionListener(ActionEvent -> {
-			Hospital hospital = new Hospital();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			hospital = controllerHospital.buscarHospital(idtemp);
-			txtNome.setText(hospital.getNome());
-			txtcnpj.setText(hospital.getCnpj());
-			txttelefone.setText(hospital.getTelefoneHospital().getNumerotelefone());
-			txtrua.setText(hospital.getRua());
-			txtbairro.setText(hospital.getBairro());
-			txtcidade.setText(hospital.getCidade());
+			try {
+				Hospital hospital = new Hospital();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				hospital = controllerHospital.buscarHospital(idtemp);
+				txtNome.setText(hospital.getNome());
+				txtcnpj.setText(hospital.getCnpj());
+				txttelefone.setText(hospital.getTelefoneHospital().getNumerotelefone());
+				txtrua.setText(hospital.getRua());
+				txtbairro.setText(hospital.getBairro());
+				txtcidade.setText(hospital.getCidade());
+				editar.setEnabled(true);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Hospital não encontrado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		editar.addActionListener(ActionEvent -> {
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerHospital.atualizarHospital(idtemp, txtNome.getText(), txtcnpj.getText(), txttelefone.getText(),
-					txtrua.getText(), txtbairro.getText(), txtcidade.getText());
-			txtNome.setText(null);
-			txtcnpj.setText(null);
-			txttelefone.setText(null);
-			txtrua.setText(null);
-			txtbairro.setText(null);
-			txtcidade.setText(null);
+			int opc = JOptionPane.showConfirmDialog(null, "Deseja Realmente editar o hospital " + txtNome.getText(), "",
+					JOptionPane.YES_NO_OPTION);
+
+			if (opc == JOptionPane.YES_OPTION) {
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				controllerHospital.atualizarHospital(idtemp, txtNome.getText(), txtcnpj.getText(),
+						txttelefone.getText(), txtrua.getText(), txtbairro.getText(), txtcidade.getText());
+				JOptionPane.showMessageDialog(null, "Edição Realizada com sucesso", "",
+						JOptionPane.INFORMATION_MESSAGE);
+				txtNome.setText(null);
+				txtcnpj.setText(null);
+				txttelefone.setText(null);
+				txtrua.setText(null);
+				txtbairro.setText(null);
+				txtcidade.setText(null);
+			} else {
+				JOptionPane.showMessageDialog(null, "Edição Cancelada com sucesso", "",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
@@ -270,27 +292,41 @@ public class InterfaceHospital {
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
 
 		botaobuscar.addActionListener((ActionEvent) -> {
-			Hospital hospital = new Hospital();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			hospital = controllerHospital.buscarHospital(idtemp);
-			txtNome.setText(hospital.getNome());
-			txtcnpj.setText(hospital.getCnpj());
-			txttelefone.setText(hospital.getTelefoneHospital().getNumerotelefone());
-			txtrua.setText(hospital.getRua());
-			txtbairro.setText(hospital.getBairro());
-			txtcidade.setText(hospital.getCidade());
+			try {
+				Hospital hospital = new Hospital();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				hospital = controllerHospital.buscarHospital(idtemp);
+				txtNome.setText(hospital.getNome());
+				txtcnpj.setText(hospital.getCnpj());
+				txttelefone.setText(hospital.getTelefoneHospital().getNumerotelefone());
+				txtrua.setText(hospital.getRua());
+				txtbairro.setText(hospital.getBairro());
+				txtcidade.setText(hospital.getCidade());
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Hospital Não Encontrado", "", JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		remover.addActionListener((ActionEvent) -> {
+			int opc = JOptionPane.showConfirmDialog(null, "Deseja Realmente remover o Hospital " + txtNome.getText(),
+					"", JOptionPane.YES_NO_OPTION);
+			
+			if(opc == JOptionPane.YES_OPTION) {
 			int idtemp = Integer.parseInt(txtid.getText());
 			controllerHospital.removerHospital(idtemp);
+			JOptionPane.showMessageDialog(null, "Hospital Removido com Sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 			txtNome.setText(null);
 			txtcnpj.setText(null);
 			txttelefone.setText(null);
 			txtrua.setText(null);
 			txtbairro.setText(null);
 			txtcidade.setText(null);
+			
+			}else {
+				JOptionPane.showMessageDialog(null, "Remoção cancelada com Sucesso", "Sucesso", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {

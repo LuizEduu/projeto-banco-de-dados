@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -107,20 +108,29 @@ public class InterfacePaciente {
 		cadastrarPaciente.add(btnFecharcadastro);
 
 		btnCadastrar.addActionListener((ActionEvent) -> {
-			controllerPaciente.cadastrarPaciente(txtNome.getText(), txtcpf.getText(),
-					(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(), txtrua.getText(),
-					txtnumero.getText(), txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
 
-			txtNome.setText(null);
-			txtcpf.setText(null);
-			ComboSexo.setSelectedItem(null);
-			txtemail.setText(null);
-			txttelefone.setText(null);
-			txtrua.setText(null);
-			txtnumero.setText(null);
-			txtbairro.setText(null);
-			txtcidade.setText(null);
-			txtnascimento.setText(null);
+			try {
+				controllerPaciente.cadastrarPaciente(txtNome.getText(), txtcpf.getText(),
+						(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(),
+						txtrua.getText(), txtnumero.getText(), txtbairro.getText(), txtcidade.getText(),
+						txtnascimento.getText());
+				JOptionPane.showMessageDialog(null, "Paciente Cadastrado com Sucesso", "sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+
+				txtNome.setText(null);
+				txtcpf.setText(null);
+				ComboSexo.setSelectedItem(null);
+				txtemail.setText(null);
+				txttelefone.setText(null);
+				txtrua.setText(null);
+				txtnumero.setText(null);
+				txtbairro.setText(null);
+				txtcidade.setText(null);
+				txtnascimento.setText(null);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Erro Paciente não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		btnFecharcadastro.addActionListener((ActionEvent) -> {
@@ -216,30 +226,49 @@ public class InterfacePaciente {
 		editarPaciente.add(txtnascimento);
 		editarPaciente.add(editar);
 		editarPaciente.add(fecharRemocao);
+		editar.setEnabled(false);
 
 		botaobuscar.addActionListener(ActionEvent -> {
-			Paciente paciente = new Paciente();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerPaciente.buscarPaciente(idtemp);
+			try {
+				Paciente paciente = new Paciente();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				paciente = controllerPaciente.buscarPaciente(idtemp);
 
-			txtNome.setText(paciente.getNome());
-			txtcpf.setText(paciente.getCpf());
-			ComboSexo.setSelectedItem(paciente.getSexo());
-			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getNumero());
-			txtrua.setText(paciente.getEnderecoPaciente().getRua());
-			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
-			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
-			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
-			txtnascimento.setText(paciente.getNascimento());
+				txtNome.setText(paciente.getNome());
+				txtcpf.setText(paciente.getCpf());
+				ComboSexo.setSelectedItem(paciente.getSexo());
+				txtemail.setText(paciente.getEmail());
+				txttelefone.setText(paciente.getTelefonePaciente().getNumero());
+				txtrua.setText(paciente.getEnderecoPaciente().getRua());
+				txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
+				txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
+				txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
+				txtnascimento.setText(paciente.getNascimento());
+				editar.setEnabled(true);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Paciente não encontrado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		editar.addActionListener(ActionEvent -> {
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerPaciente.atualizarpaciente(idtemp, txtNome.getText(), txtcpf.getText(),
-					(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(), txtrua.getText(),
-					txtnumero.getText(), txtbairro.getText(), txtcidade.getText(), txtnascimento.getText());
+			int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente editar o Paciente " + txtNome.getText(), "",
+					JOptionPane.YES_NO_OPTION);
+			if (opc == JOptionPane.YES_OPTION) {
+				
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				controllerPaciente.atualizarpaciente(idtemp, txtNome.getText(), txtcpf.getText(),
+						(String) ComboSexo.getSelectedItem(), txtemail.getText(), txttelefone.getText(),
+						txtrua.getText(), txtnumero.getText(), txtbairro.getText(), txtcidade.getText(),
+						txtnascimento.getText());
+				JOptionPane.showMessageDialog(null, "Paciente Editado com Sucesso", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+					
+			} else {
+				JOptionPane.showMessageDialog(null, "Edição Cancelada Com Sucesso", "Erro", JOptionPane.CLOSED_OPTION);
+			}
 		});
 
 		fecharRemocao.addActionListener((ActionEvent) -> {
@@ -355,7 +384,7 @@ public class InterfacePaciente {
 		txtbairro.setEditable(false);
 		txtcidade.setEditable(false);
 		txtnascimento.setEditable(false);
-		
+
 		txtNome.setFont(txtNome.getFont().deriveFont(14f));
 		txtcpf.setFont(txtcpf.getFont().deriveFont(14f));
 		txtsexo.setFont(txtsexo.getFont().deriveFont(14f));
@@ -367,26 +396,41 @@ public class InterfacePaciente {
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
 		txtnascimento.setFont(txtnascimento.getFont().deriveFont(14f));
 
-		botaobuscar.addActionListener((ActionEvent) -> {
-			Paciente paciente = new Paciente();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			paciente = controllerPaciente.buscarPaciente(idtemp);
-			txtNome.setText(paciente.getNome());
-			txtcpf.setText(paciente.getCpf());
-			txtsexo.setText(paciente.getSexo());
-			txtemail.setText(paciente.getEmail());
-			txttelefone.setText(paciente.getTelefonePaciente().getNumero());
-			txtrua.setText(paciente.getEnderecoPaciente().getRua());
-			txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
-			txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
-			txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
-			txtnascimento.setText(paciente.getNascimento());
+		botaobuscar.addActionListener(ActionEvent -> {
+			try {
+				Paciente paciente = new Paciente();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				paciente = controllerPaciente.buscarPaciente(idtemp);
+				txtNome.setText(paciente.getNome());
+				txtcpf.setText(paciente.getCpf());
+				txtsexo.setText(paciente.getSexo());
+				txtemail.setText(paciente.getEmail());
+				txttelefone.setText(paciente.getTelefonePaciente().getNumero());
+				txtrua.setText(paciente.getEnderecoPaciente().getRua());
+				txtnumero.setText(paciente.getEnderecoPaciente().getNumero());
+				txtbairro.setText(paciente.getEnderecoPaciente().getBairro());
+				txtcidade.setText(paciente.getEnderecoPaciente().getCidade());
+				txtnascimento.setText(paciente.getNascimento());
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Paciente não encontrado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
 
 		remover.addActionListener((ActionEvent) -> {
-			int idtemp = Integer.parseInt(txtid.getText());
-			controllerPaciente.removerpaciente(idtemp);
+			int opc = JOptionPane.showConfirmDialog(null, "Deseja Realmente Remover o Paciente " + txtNome.getText(),
+					"", JOptionPane.YES_NO_OPTION);
+
+			if (opc == JOptionPane.YES_OPTION) {
+				int idtemp = Integer.parseInt(txtid.getText());
+				controllerPaciente.removerpaciente(idtemp);
+				JOptionPane.showMessageDialog(null, "Paciente removido com sucesso", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Remoção Cancelada com sucesso", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		fechartela.addActionListener((ActionEvent) -> {
@@ -411,33 +455,29 @@ public class InterfacePaciente {
 		DefaultTableModel tabelaPaciente = new DefaultTableModel(null, new String[] { "ID", "Nome", "CPF", "Sexo",
 				"Email", "Telefone", "Rua", "Numero", "Bairro", "Cidade", "Data Nascimento" });
 
-		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
-				"Vazio", "Vazio" };
+		// String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
+		// "Vazio", "Vazio", "Vazio", "Vazio",
+		// "Vazio", "Vazio" };
 
 		ArrayList<Paciente> list = controllerPaciente.listarpaciente();
 
-		if (list == null) {
-			tabelaPaciente.addRow(elementosvazio);
+		for (Paciente paciente : list) {
+			String idtemp = Long.toString(paciente.getId());
+			txtId.setText(idtemp);
+			txtNome.setText(paciente.getNome());
+			txtcpf.setText(paciente.getCpf());
+			txtsexo.setText(paciente.getSexo());
+			txtEmail.setText(paciente.getEmail());
+			txtTelefone.setText(paciente.getTelefonePaciente().getNumero());
+			txtRua.setText(paciente.getEnderecoPaciente().getRua());
+			txtNumero.setText(paciente.getEnderecoPaciente().getNumero());
+			txtBairro.setText(paciente.getEnderecoPaciente().getBairro());
+			txtCidade.setText(paciente.getEnderecoPaciente().getCidade());
+			txtDataNascimento.setText(paciente.getNascimento());
 
-		} else {
-			for (Paciente paciente : list) {
-				String idtemp = Long.toString(paciente.getId());
-				txtId.setText(idtemp);
-				txtNome.setText(paciente.getNome());
-				txtcpf.setText(paciente.getCpf());
-				txtsexo.setText(paciente.getSexo());
-				txtEmail.setText(paciente.getEmail());
-				txtTelefone.setText(paciente.getTelefonePaciente().getNumero());
-				txtRua.setText(paciente.getEnderecoPaciente().getRua());
-				txtNumero.setText(paciente.getEnderecoPaciente().getNumero());
-				txtBairro.setText(paciente.getEnderecoPaciente().getBairro());
-				txtCidade.setText(paciente.getEnderecoPaciente().getCidade());
-				txtDataNascimento.setText(paciente.getNascimento());
-
-				tabelaPaciente.addRow(new String[] { txtId.getText(), txtNome.getText(), txtcpf.getText(),
-						txtsexo.getText(), txtEmail.getText(), txtTelefone.getText(), txtRua.getText(),
-						txtNumero.getText(), txtBairro.getText(), txtCidade.getText(), txtDataNascimento.getText()});
-			}
+			tabelaPaciente.addRow(new String[] { txtId.getText(), txtNome.getText(), txtcpf.getText(),
+					txtsexo.getText(), txtEmail.getText(), txtTelefone.getText(), txtRua.getText(), txtNumero.getText(),
+					txtBairro.getText(), txtCidade.getText(), txtDataNascimento.getText() });
 		}
 
 		JPanel listarPaciente = new JPanel();

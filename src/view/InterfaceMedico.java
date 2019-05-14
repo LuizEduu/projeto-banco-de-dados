@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -99,20 +100,29 @@ public class InterfaceMedico {
 		cadastrarMedico.add(btnFecharcadastro);
 
 		btnCadastrar.addActionListener((ActionEvent) -> {
-			controllerMedico.cadastrarMedico(txtNome.getText(), txtcpf.getText(), (String) ComboSexo.getSelectedItem(),
-					txtespecialidade.getText(), txtcrm.getText(), txttelefone.getText(), txtrua.getText(),
-					txtnumero.getText(), txtbairro.getText(), txtcidade.getText());
+			try {
+				controllerMedico.cadastrarMedico(txtNome.getText(), txtcpf.getText(),
+						(String) ComboSexo.getSelectedItem(), txtespecialidade.getText(), txtcrm.getText(),
+						txttelefone.getText(), txtrua.getText(), txtnumero.getText(), txtbairro.getText(),
+						txtcidade.getText());
 
-			txtNome.setText(null);
-			txtcpf.setText(null);
-			ComboSexo.setSelectedItem(null);
-			txtespecialidade.setText(null);
-			txtcrm.setText(null);
-			txttelefone.setText(null);
-			txtrua.setText(null);
-			txtnumero.setText(null);
-			txtbairro.setText(null);
-			txtcidade.setText(null);
+				txtNome.setText(null);
+				txtcpf.setText(null);
+				ComboSexo.setSelectedItem(null);
+				txtespecialidade.setText(null);
+				txtcrm.setText(null);
+				txttelefone.setText(null);
+				txtrua.setText(null);
+				txtnumero.setText(null);
+				txtbairro.setText(null);
+				txtcidade.setText(null);
+
+				JOptionPane.showMessageDialog(null, "Medico cadastrado com sucesso", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Erro, Medico não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		btnFecharcadastro.addActionListener((ActionEvent) -> {
@@ -199,43 +209,61 @@ public class InterfaceMedico {
 		editarMedico.add(txtcidade);
 		editarMedico.add(editar);
 		editarMedico.add(fecharRemocao);
+		editar.setEnabled(false);
 
 		botaobuscar.addActionListener(ActionEvent -> {
-			Medico medico = new Medico();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			medico = controllerMedico.buscarMedico(idtemp);
+			try {
+				Medico medico = new Medico();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				medico = controllerMedico.buscarMedico(idtemp);
 
-			txtNome.setText(medico.getNome());
-			txtcpf.setText(medico.getCpf());
-			ComboSexo.setSelectedItem(medico.getSexo());
-			txtespecialidade.setText(medico.getEspecialidade());
-			txtcrm.setText(medico.getCrm());
-			txttelefone.setText(medico.getTelefoneMedico().getNumero());
-			txtrua.setText(medico.getEnderecoMedico().getRua());
-			txtnumero.setText(medico.getEnderecoMedico().getNumero());
-			txtbairro.setText(medico.getEnderecoMedico().getBairro());
-			txtcidade.setText(medico.getEnderecoMedico().getCidade());
+				txtNome.setText(medico.getNome());
+				txtcpf.setText(medico.getCpf());
+				ComboSexo.setSelectedItem(medico.getSexo());
+				txtespecialidade.setText(medico.getEspecialidade());
+				txtcrm.setText(medico.getCrm());
+				txttelefone.setText(medico.getTelefoneMedico().getNumero());
+				txtrua.setText(medico.getEnderecoMedico().getRua());
+				txtnumero.setText(medico.getEnderecoMedico().getNumero());
+				txtbairro.setText(medico.getEnderecoMedico().getBairro());
+				txtcidade.setText(medico.getEnderecoMedico().getCidade());
+				editar.setEnabled(true);
+
+			}catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Medico não encontrado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		editar.addActionListener(ActionEvent -> {
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			controllerMedico.atualizarMedico(idtemp, txtNome.getText(), txtcpf.getText(),
-					(String) ComboSexo.getSelectedItem(), txtespecialidade.getText(), txtcrm.getText(),
-					txttelefone.getText(), txtrua.getText(), txtnumero.getText(), txtbairro.getText(),
-					txtcidade.getText());
-			
-			txtNome.setText(null);
-			txtcpf.setText(null);
-			ComboSexo.setSelectedItem(null);
-			txtespecialidade.setText(null);
-			txtcrm.setText(null);
-			txttelefone.setText(null);
-			txtrua.setText(null);
-			txtnumero.setText(null);
-			txtbairro.setText(null);
-			txtcidade.setText(null);
-		});
+				int opc = JOptionPane.showConfirmDialog(null, "Deseja Realmente editar o medico " + txtNome.getText(),
+						"", JOptionPane.YES_NO_OPTION);
 
+				if (opc == JOptionPane.YES_OPTION) {
+					Long idtemp = (long) Integer.parseInt(txtid.getText());
+					controllerMedico.atualizarMedico(idtemp, txtNome.getText(), txtcpf.getText(),
+							(String) ComboSexo.getSelectedItem(), txtespecialidade.getText(), txtcrm.getText(),
+							txttelefone.getText(), txtrua.getText(), txtnumero.getText(), txtbairro.getText(),
+							txtcidade.getText());
+					JOptionPane.showMessageDialog(null, "Medico Editado com Sucesso", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+
+					txtNome.setText(null);
+					txtcpf.setText(null);
+					ComboSexo.setSelectedItem(null);
+					txtespecialidade.setText(null);
+					txtcrm.setText(null);
+					txttelefone.setText(null);
+					txtrua.setText(null);
+					txtnumero.setText(null);
+					txtbairro.setText(null);
+					txtcidade.setText(null);
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Edição cancelada com sucesso", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
+		});
 		fecharRemocao.addActionListener((ActionEvent) -> {
 			janelaEditarMedico.dispose();
 		});
@@ -352,35 +380,43 @@ public class InterfaceMedico {
 		txtbairro.setFont(txtbairro.getFont().deriveFont(14f));
 		txtcidade.setFont(txtcidade.getFont().deriveFont(14f));
 
-		botaobuscar.addActionListener((ActionEvent) -> {
-			Medico medico = new Medico();
-			Long idtemp = (long) Integer.parseInt(txtid.getText());
-			medico = controllerMedico.buscarMedico(idtemp);
-			txtNome.setText(medico.getNome());
-			txtcpf.setText(medico.getCpf());
-			txtsexo.setText(medico.getSexo());
-			txtespecialidade.setText(medico.getEspecialidade());
-			txtcrm.setText(medico.getCrm());
-			txttelefone.setText(medico.getTelefoneMedico().getNumero());
-			txtrua.setText(medico.getEnderecoMedico().getRua());
-			txtnumero.setText(medico.getEnderecoMedico().getNumero());
-			txtbairro.setText(medico.getEnderecoMedico().getBairro());
-			txtcidade.setText(medico.getEnderecoMedico().getCidade());
-			txtNome.setEditable(false);
-			txtsexo.setEditable(false);
-			txtespecialidade.setEditable(false);
-			txttelefone.setEditable(false);
-			txtrua.setEditable(false);
-			txtnumero.setEditable(false);
-			txtbairro.setEditable(false);
-			txtcidade.setEditable(false);
+		remover.setEnabled(false);
+
+		botaobuscar.addActionListener(ActionEvent -> {
+			try {
+				Medico medico = new Medico();
+				Long idtemp = (long) Integer.parseInt(txtid.getText());
+				medico = controllerMedico.buscarMedico(idtemp);
+				txtNome.setText(medico.getNome());
+				txtcpf.setText(medico.getCpf());
+				txtsexo.setText(medico.getSexo());
+				txtespecialidade.setText(medico.getEspecialidade());
+				txtcrm.setText(medico.getCrm());
+				txttelefone.setText(medico.getTelefoneMedico().getNumero());
+				txtrua.setText(medico.getEnderecoMedico().getRua());
+				txtnumero.setText(medico.getEnderecoMedico().getNumero());
+				txtbairro.setText(medico.getEnderecoMedico().getBairro());
+				txtcidade.setText(medico.getEnderecoMedico().getCidade());
+				txtNome.setEditable(false);
+				txtsexo.setEditable(false);
+				txtespecialidade.setEditable(false);
+				txttelefone.setEditable(false);
+				txtrua.setEditable(false);
+				txtnumero.setEditable(false);
+				txtbairro.setEditable(false);
+				txtcidade.setEditable(false);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(botaobuscar, "Medico não encontrado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 		});
-
+		
 		remover.addActionListener((ActionEvent) -> {
 			int idtemp = Integer.parseInt(txtid.getText());
 			controllerMedico.removerMedico(idtemp);
-			
+
 			txtNome.setText(null);
 			txtcpf.setText(null);
 			txtsexo.setText(null);
@@ -415,15 +451,9 @@ public class InterfaceMedico {
 		DefaultTableModel tabelaMedico = new DefaultTableModel(null, new String[] { "ID", "Nome", "CPF", "Sexo",
 				"Especialidade", "CRM", "Telefone", "Rua", "Numero", "Bairro", "Cidade" });
 
-		String[] elementosvazio = { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
-				"Vazio", "Vazio" };
-
 		ArrayList<Medico> list = controllerMedico.listarMedico();
 
-		if (list == null) {
-			tabelaMedico.addRow(elementosvazio);
-
-		} else {
+		if (list != null) {
 			for (Medico medico : list) {
 				String idtemp = Long.toString(medico.getId());
 				txtId.setText(idtemp);
@@ -442,6 +472,10 @@ public class InterfaceMedico {
 						txtsexo.getText(), txtespecialidade.getText(), txtcrm.getText(), txtTelefone.getText(),
 						txtRua.getText(), txtNumero.getText(), txtBairro.getText(), txtCidade.getText() });
 			}
+
+		} else if (list == null) {
+			tabelaMedico.addRow(new String[] { "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio", "Vazio",
+					"Vazio", "Vazio", "Vazio" });
 		}
 
 		JPanel listarMedico = new JPanel();

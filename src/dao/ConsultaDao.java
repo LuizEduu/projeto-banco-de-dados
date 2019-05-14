@@ -21,7 +21,7 @@ public class ConsultaDao {
 
 	public void agendarConsulta(Consulta consulta) {
 		try {
-			String sql = "insert into consulta (id_paciente, id_medico, _idhospital, data, diagnostico) values (?, ?, ?, ?, ?)";
+			String sql = "insert into consulta (id_paciente, id_medico, id_hospital, data, diagnostico) values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, consulta.getId_paciente());
 			preparedStatement.setLong(2, consulta.getId_medico());
@@ -31,6 +31,7 @@ public class ConsultaDao {
 			preparedStatement.execute();
 			connection.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -42,7 +43,7 @@ public class ConsultaDao {
 	public void atualizarConsulta(long id, Consulta consulta) {
 		try {
 			String sql = "update consulta set id_paciente= ?, id_medico=?, id_hospital= ?, data= ?, diagnostico= ? "
-					+ "where idconsulta=?";
+					+ "where idconsulta= ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, consulta.getId_paciente());

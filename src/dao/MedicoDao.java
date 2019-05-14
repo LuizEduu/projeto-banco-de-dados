@@ -54,7 +54,6 @@ public class MedicoDao {
 			preparedStatement3.setInt(5, lastId);
 			preparedStatement2.execute();
 			preparedStatement3.execute();
-
 			connection.commit();
 
 		} catch (Exception e) {
